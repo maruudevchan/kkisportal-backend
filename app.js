@@ -1,5 +1,9 @@
-import { application } from 'express';
-import App from './config/config.conf.js';
+const express = require('express');
+const Routes = require('./routes/routes.js');
+
+const app = express();
+const routes = new Routes();
+routes.initRoutes(app);
 
 const port = process.env.APP_PORT || 3000;
-App.http.listen(port, ()=>console.log(`API is running, port: ${port}`));
+app.listen(port, () => console.log(`API is running, port: ${port}`));
