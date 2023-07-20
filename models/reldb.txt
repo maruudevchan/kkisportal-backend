@@ -1,0 +1,347 @@
+/* 
+master file fields
+
+school info
+year entered kkis season
+year entered
+graduation year
+graduation season
+career
+junior high applied for scholarship
+doing practicas
+social service where
+secundaria
+secundaria gpa (promedio)
+school
+isactive status active dropped out graduated
+
+year dropped out in case
+year in school
+term in
+session (turno en el que estudia)
+
+-------------calificaciones----------------
+semester 1 fall 2019
+semester 1 gpa
+english gpa
+
+asi hasta semestre 6
+
+high school english
+high school gpa cumulativo
+entrego calificaciones de semestre 1
+ficha de pago
+debe algo a kkis?
+horario disponible
+nota de malú
+
+-----------encuestas----------------
+hobbies
+favorite food
+favorite color
+favorite word
+favorite subject in school
+
+wish when graduated
+what exites you the most
+who do u admire and why
+what interests you most in the world and why
+what does education mean to u
+words to sponsor
+
+----------trash------------
+tabla catalogos
+
+general info
+
+internet service
+desktop
+laptop
+tablet
+smartphone
+shared device
+
+gender
+object pronoun
+subject pronoun
+possessive pronoun
+
+dataphoneCompany
+name
+
+colonia
+id
+colonia name
+
+sizes
+tshirt
+formsKKIS
+id
+attended to transpersonal
+attended to initial
+contract signed
+
+advisor url
+advisor name
+advisor gender
+advisor phone
+advisor email
+general notes
+special situation
+
+sponsor url
+sponsor group conversation order
+sponsor name
+sponsor main language
+
+info student
+students name
+students last name
+nickname
+birthdate
+dataphone
+dataphone company
+email
+gender
+phone contact 1--- name number and relationship
+phone contact 2---  name number and relationship
+adress
+colonia
+tshirt size
+working place
+
+
+socioeconomic
+idstu
+fathers name
+fathers occupation
+mothers name
+mothers occupation
+income family members ratio
+own house
+pay rent
+mortage with infonavit
+family special circumstances
+second scholarship
+
+media
+
+picture
+url student profile photo wp
+url student holiday photo wp
+url christmas cards wp
+
+*/
+/*
+
+generame un sql para crear las siguientes tablas:
+
+tabla relationship
+id pk autoincrement
+relationship string de 15 caracteres
+
+tabla status
+id pk autoincrement
+status  string de 12 caracteres
+
+tabla gender
+id primary key int no null autoincrement
+gender string
+objPronoun string
+subjPronoun string
+
+tabla seasons
+id pk autoincrement
+season string de 15 caracteres
+
+tabla language
+id pk autoincrement
+language string de 15 caracteres
+
+tabla datPhCompany
+id int no null autoincrement
+name string de 20 caracteres
+
+tabla colonia
+id primary key  int no null autoincrement
+colonia string de 30 caracteres
+
+tabla sizes
+id  primary key int no null autoincrement
+tshirtSize string de 2 caracteres
+
+tabla session
+id pk autoincrement
+turno string de 8 caracteres
+
+tabla advisor
+id pk autoincrement
+advisorUrl string de 50 caracteres
+advisorName string de 30 caracteres
+advisorGender fk tabla gender campo id
+advisorPhone string de 10 caracteres
+advisorEmail string de 25 caracteres
+generalNotes string de 100 caracteres
+specialSituation string de 100 caracteres
+
+tabla sponsor
+id pk autoincrement
+spName string de 30 caracteres
+spGroupConvOrder string de 20 caracteres
+spLanguage fk language campo id
+spUrl string de 50 caracteres.
+
+tabla socioeconomic
+id pk incremental
+idst int unique
+fatherName string de 50 caracteres
+fatherOccupation string de 50 caracteres
+motherName string de 50 caracteres
+motherOccupation string de 50 caracteres
+incomeRatio string de 5 caracteres
+familyCircunstances string de 80 caracteres
+secondSchoolarship boolean default 0
+ownHouse boolean default 0
+payRent boolean default 0
+infonavitMortage boolean default 0
+internet boolean default 0
+desktopPC boolean default 0
+laptop boolean default 0
+tablet boolean default 0
+smartphone boolean default 1
+sharedDevice string de 10 caracteres
+
+tabla schoolar
+id primary key no null autoincrement
+stName string de 20 caracteres
+stLastName string de 30 caracteres
+stNickname string de 20 caracteres
+stBirthDay int de 2 digitos
+stBirthMonth int de 2 digitos
+stBirthYear int de 4 digitos
+stDataphone int de 10 digitos
+stEmail string de 25 caracteres
+stContName1 string de 30 caracteres
+stContPhone1 string de 10 caracteres
+stContRelationship1 fk de tabla relationship
+stContName2 string de 30 caracteres
+stContPhone2 string de 10 caracteres
+stContRelationship2 fk de tabla relationship
+stAdress string de 30 caracteres
+stColonia fk de tabla colonia
+stShirtSize fk de tabla sizes
+stWorkPlace string de 20 caracteres
+idSocioeconomic fk socioeconomic
+idAdvisor
+idSponsor
+
+tabla schoolarInfo
+id pk autoincrement
+idst fk tabla schoolar campo id
+yearJoined int
+seasonEntered fk tabla season campo id
+graduationYear int
+graduationSeason fk tabla season campo id
+career string de 50 caracteres
+junHighFrom string de 50 caracteres
+isInPractices boolean default 0
+isInSocialS boolean default 0
+isActive fk status campo id
+yDroppedOut int default 0
+currentYear int
+currentTerm int
+session  fk tabla session id
+availability string de 20 caracteres
+maluNotes text
+
+tabla formsKKIS
+id pk autoincrement
+idst fk schoolar campo id
+transpersonal boolean default 0
+initialM boolean default 1
+SignedContract boolean default 1
+
+tabla media
+id pk autoincrement
+idst fk schoolar campo id
+urlStPicWp string de 50 caracteres
+urlStHolPicWp string de 50 caracteres
+urlXmassCardWp string de 50 caracteres
+
+tabla HighSchoolGrades
+id pk autoincrement
+idst fk tabla schoolar
+sem1SeasonY string de 10 caracteres
+sem1GPA float
+enG1PA float
+sem2GPA float
+enG2PA float
+sem3GPA float
+enG3PA float
+sem14PA float
+enG44PA float
+sem5GPA float
+enG5PA float
+sem6GPA float
+enG6PA float
+cuHighGrade float
+cuEnGrade float
+hasDeliveredGrades boolean default 0
+hasPaymentBill boolean default 0
+hasPendings boolean default 0
+
+tabla UniversityGrades
+id pk autoincrement
+idst fk tabla schoolar
+term1SeasonY string de 10 caracteres
+term1GPA float
+eng1GPA float
+term2GPA float
+eng2GPA float
+term3GPA float
+eng3GPA float
+term1GPA float
+eng4GPA float
+term5GPA float
+eng5PA float
+term6GPA float
+eng6GPA float
+term7GPA float
+eng7GPA float
+term8GPA float
+eng8GPA float
+term9GPA float
+eng9GPA float
+term10GPA float
+eng10GPA float
+term11GPA float
+eng11GPA float
+term12GPA float
+eng12GPA float
+term13GPA float
+eng13GPA float
+cuUniGrade float
+cuEnGrade float
+hasDeliveredGrades boolean default 0
+hasPaymentBill boolean default 0
+hasPendings boolean default 0
+hasReport boolean default 0
+
+tabla surveys
+id pk autoincrement
+idst fk tabla schoolar campo id
+favFood text
+favColor text
+favWord text
+favSubject text
+wishWhenGraduated text
+whatExcitesMost text
+person2Admire text
+EduMeaning text
+words2Sponsor text
+
+
+
+
+*/
+    
