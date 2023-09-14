@@ -17,6 +17,7 @@ CREATE TABLE `contacts` (
 
 import { DataTypes, Model } from 'sequelize';
 import {DatabaseConfig} from '../config/database.js';
+import {schoolarsModel} from './schoolars.js';
 
 export class contactsModel extends Model {}
 
@@ -28,7 +29,12 @@ contactsModel.init({
     },
     idst: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: schoolarsModel,
+            key: 'id'
+        }
+
     },
     email: {
         type: DataTypes.STRING(255),

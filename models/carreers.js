@@ -10,9 +10,9 @@ CREATE TABLE `carreers` (
 import {Model, DataTypes} from 'sequelize';
 import { DatabaseConfig } from '../config/database.js';
 
-export class carreerModel extends Model {}
+export class carreersModel extends Model {}
 
-carreerModel.init({
+carreersModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

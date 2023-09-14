@@ -1,20 +1,25 @@
-/*sql
-CREATE TABLE `advisors` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `advisorUrl` VARCHAR(50),
-  `advisorName` VARCHAR(30),
-  `advisorGender` INT,
-  `advisorPhone` VARCHAR(10),
-  `advisorEmail` VARCHAR(25)
-);
+/**
+ * ?sql
+** CREATE TABLE `advisors` (
+**  `id` int PRIMARY KEY AUTO_INCREMENT,
+**  `advisorUrl` VARCHAR(50),
+**  `advisorName` VARCHAR(30),
+**  `advisorGender` INT,
+**  `advisorPhone` VARCHAR(10),
+**  `advisorEmail` VARCHAR(25)
+**);
 */
+
+
 
 import {Model, DataTypes} from 'sequelize';
 import { DatabaseConfig } from '../config/database.js';
+import {gendersModel} from './genders.js'
 
-export class advisorModel extends Model {}
 
-advisorModel.init({
+export class advisorsModel extends Model {}
+
+advisorsModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -32,7 +37,7 @@ advisorModel.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: genderModel,
+            model: gendersModel,
             key: 'id'
         }
     },
@@ -50,4 +55,4 @@ advisorModel.init({
     timestamps: false
 });
 
-advisorModel.belongsTo(genderModel, {foreignKey: 'advisorGender', as: 'id'});
+advisorsModel.belongsTo(gendersModel, {foreignKey: 'advisorGender', as: 'id'});
