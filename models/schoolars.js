@@ -166,8 +166,12 @@ schoolarsModel.init({
         }
     },
     jrHighOrigin: {
-        type: DataTypes.STRING(255),
-        allowNull: false
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: schoolsModel,
+            key: 'id'
+        }
     },
     jrHighGPA: {
         type: DataTypes.FLOAT,

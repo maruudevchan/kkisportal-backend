@@ -8,9 +8,9 @@ CREATE TABLE `languages` (
 import { Model, DataTypes } from 'sequelize';
 import {DatabaseConfig} from '../config/database.js';
 
-export class languageModel extends Model {}
+export class languagesModel extends Model {}
 
-languageModel.init({
+languagesModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
