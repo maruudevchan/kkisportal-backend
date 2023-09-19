@@ -1,4 +1,5 @@
-/* sql
+/**
+ * ?sql
 
 CREATE TABLE `carreers` (
   `id` float PRIMARY KEY AUTO_INCREMENT,
