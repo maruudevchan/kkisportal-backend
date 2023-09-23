@@ -1,27 +1,27 @@
 import { query } from "express"
-import { contactsModel } from "../models/colonias.js"
+import { familyInfoModel } from "../models/familyInfo.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class contactsQueries {
+class familyInfoQueries {
 
-    /**Para meter contactos */
+    /**Para meter info de familia del schoolar */
 
-    async store(contact) {
+    async store(familyInfo) {
         try {
-            const query = await contactsModel.create(contact);
+            const query = await familyInfoModel.create(familyInfo);
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el contacto: ${error.message}`);
+            return error(`Error al crear la info familiar: ${error.message}`);
         } finally {
             return { ok: true, data: query };
         }
     }
 
-    /**para buscar contact por ID */
-    async findStContacts(id) {
+    /**para buscar famil por ID */
+    async findFamilyInfoSt(id) {
         try {
-            const query = await contactsModel.findOne(
+            const query = await familyInfoModel.findOne(
                 {
                     where:
                         { idst: id }
@@ -29,25 +29,25 @@ class contactsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar la info familiar del alumno: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un contacto  */
-    async updateStContact(id, contact) {
+    /**Para actualizar un familo  */
+    async updateStfamil(id, famil) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const row = await contactsModel.update(contact, {
+            const row = await familyInfoModel.update(famil, {
                 where: { idst: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el contacto: ${error.message}` };
+            return { ok: false, error: `Error al actualizar el familo: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Contacto actualizado correctamente', data: row };
+            return { ok: true, message: 'familo actualizado correctamente', data: row };
         }
 
     }

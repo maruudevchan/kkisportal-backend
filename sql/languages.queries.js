@@ -1,15 +1,15 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { languagesModel } from "../models/languages.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class languagesQueries {
 
-    /**Para meter advisors */
+    /**Para meter languages */
 
-    async store(advisor) {
+    async store(language) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await languagesModel.create(language);
         } catch (error) {
             console.log('error: ', error);
             return error(`Error al crear el asesor: ${error.message}`);
@@ -18,10 +18,10 @@ class advisorsQueries {
         }
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    /**para buscar language por ID */
+    async findlanguage(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await languagesModel.findOne(
                 {
                     where:
                         { id: id }
@@ -36,18 +36,18 @@ class advisorsQueries {
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    /**Para actualizar un language */
+    async updatelanguage(id, language) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const [updatedRows] = await languagesModel.update(language, {
                 where: { id: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar el idioma: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, message: 'Idioma actualizado correctamente' };
         }
 
     }

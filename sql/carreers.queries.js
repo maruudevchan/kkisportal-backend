@@ -29,7 +29,7 @@ class carreersQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar la carrera: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
@@ -45,7 +45,7 @@ class carreersQueries {
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar la carrera: ${error.message}` };
         } finally {
             return { ok: true, message: 'Carrera actualizada correctamente' };
         }

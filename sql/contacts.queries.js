@@ -29,7 +29,7 @@ class contactsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar el asesor: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
