@@ -1,27 +1,27 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { locationsModel } from "../models/locations.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class advisorsQueries {
 
-    /**Para meter advisors */
+    /**Para meter ciudades */
 
-    async store(advisor) {
+    async store(location) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await locationsModel.create(location);
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al crear la ubicación: ${error.message}`);
         } finally {
             return { ok: true, data: query };
         }
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    /**para buscar ciudad por ID */
+    async findLocation(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await locationsModel.findOne(
                 {
                     where:
                         { id: id }
@@ -29,25 +29,25 @@ class advisorsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar el id: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    /**Para actualizar una ciudad */
+    async updateAdvisor(id, location) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const update = await locationsModel.update(location, {
                 where: { id: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar la ciudad : ${error.message}` };
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, message: 'ciudad actualizada correctamente' };
         }
 
     }
