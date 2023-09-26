@@ -1,58 +1,51 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { advisorsQueries } from "../sql/advisors.queries.js"
+import { request, response } from 'express';
+import { Payload } from '../helpers/payload.js';
 
-class advisorsQueries {
+class advisorsController {
 
     /**Para meter advisors */
 
-    async store(advisor) {
-        try {
-            const query = await advisorsModel.create(advisor);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async addAdvisor(request, response) {
+        const advisor = request.body;
+
+        const query = await advisorsQueries.store(advisor);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
+
     }
 
     /**para buscar advisor por ID */
-    async findAdvisor(id) {
-        try {
-            const query = await advisorsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findAdvisor(request, response) {
+        const id = request.id;
+        const query = await advisorsQueries.findAdvisor(id);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
     /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+    async updateAdvisor(request, response) {
+        const advisor = request.body;
+        const query = await advisorsQueries.update(advisor);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
-
 }
 
-export const advisorsQueries = new advisorsQueries();
+export const advisorsController = new advisorsController();

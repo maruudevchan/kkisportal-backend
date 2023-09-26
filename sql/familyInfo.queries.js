@@ -37,7 +37,7 @@ class familyInfoQueries {
     }
 
     /**Para actualizar un familo  */
-    async updateStfamil(id, famil) {
+    async updateStfamilyInfo(id, familyInfo) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
             const row = await familyInfoModel.update(famil, {

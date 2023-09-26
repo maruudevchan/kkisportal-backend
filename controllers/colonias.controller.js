@@ -1,58 +1,58 @@
 import { query } from "express"
-import {coloniasModel } from "../models/colonias.js"
+import {coloniasQueries } from "../sql/colonias.queries.js"
 import { http } from "http"
-import { Op as Op } from 'sequelize'
 
-class coloniasQueries {
+import { request, response } from 'express';
+import { Payload } from '../helpers/payload.js';
+
+class coloniasController {
 
     /**Para meter colonias */
 
-    async store(colonia) {
-        try {
-            const query = await coloniasModel.create(colonia);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la colonia: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const colonia = request.body;
+
+        const query = await coloniasQueries.store(colonia);
+
+        if (query.ok) {
+            return response.status(201).json(query.data);
+        }else{
+            return response.status(400).json(query.error);
         }
+        
     }
 
     /**para buscar colonia por ID */
-    async findColonia(id) {
-        try {
-            const query = await coloniasModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la colonia: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findColonia(request, response) {
+        const id = request.params.id;
+
+        const query = await coloniasQueries.findColonia(id);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        }else{
+            return response.status(400).json(query.error);
         }
 
     }
 
     /**Para actualizar un colonia */
-    async updateColonia(id, colonia) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const updatedRows = await coloniasModel.update(colonia, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la colonia: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'colonia actualizado correctamente' };
-        }
+    async updateColonia(request, response) {
 
+        const id = request.params.id;
+        const colonia = request.body;
+
+        const query = await coloniasQueries.updateColonia(id, colonia);
+
+        if (query.ok) {
+            return response.status(200).json(query.message);
+        }else{
+            return response.status(400).json(query.error);
+        }
+       
     }
 
 
 }
 
-export const coloniasQueries = new coloniasQueries();
+export const coloniasController = new coloniasController();

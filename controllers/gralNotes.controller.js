@@ -1,52 +1,48 @@
 import { query } from "express"
-import { gralNotesModel } from "../models/gralNotes.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { gralNotesQueries } from "../sql/gralNotes.queries.js"
+import { request, response } from 'express'
 
-class gralNotes{
+class gralNotesController{
     
-    async store(gralNotes) {
-        try {
-            const query = await gralNotesModel.create(gralNotes);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la nota: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request,response) {
+        const gralNotes = request.body;
+
+        const query = await gralNotesQueries.store(gralNotes);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        }else{
+            return response.status(400).json(query.error);
         }
+
+        
     }
 
-    async findgralNotes(idst) {
-        try {
+    async findgralNotes(request,response) {
+        const idst = request.idst;
 
-            const query = await gralNotesModel.findAll({
-                where: {
-                    idst: idst
-                }
-            });
-            
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar las notas: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+        const query = await gralNotesQueries.findgralNotes(idst);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        }else{
+            return response.status(400).json(query.error);
         }
+
 
     }
 
-    async updategralNotes(id, gralNotes) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await gralNotesModel.update(gralNotes)({
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la nota: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Nota actualizada correctamente' };
-        }
+    async updategralNotes(request,response) {
+        const id = request.id;
+        const gralNotes = request.body;
 
+        const query = await gralNotesQueries.updategralNotes(id,gralNotes);
+
+        if (query.ok) {
+            return response.status(200).json(query.message);
+        }else{
+            return response.status(400).json(query.error);
+        }
     }
 
 

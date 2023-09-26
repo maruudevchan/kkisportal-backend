@@ -1,53 +1,52 @@
 import { query } from "express"
-import { familyInfoModel } from "../models/familyInfo.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { familyInfoQueries } from "../sql/familyInfo.queries.js"
+import { request, response } from 'express';
 
-class familyInfoQueries {
+
+class familyInfoController {
 
     /**Para meter info de familia del schoolar */
 
-    async store(familyInfo) {
-        try {
-            const query = await familyInfoModel.create(familyInfo);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la info familiar: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const familyInfo = request.body;
+
+        const query = await familyInfoQueries.store(familyInfo);
+
+        if (query.ok) {
+            return response.status(201).json(query.data);
+        } else {
+            return response.status(400).json(query.error);
         }
+
     }
 
     /**para buscar famil por ID */
-    async findFamilyInfoSt(id) {
-        try {
-            const query = await familyInfoModel.findOne(
-                {
-                    where:
-                        { idst: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la info familiar del alumno: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findFamilyInfoSt(request, response) {
+        const id = request.params.id;
+
+        const query = await familyInfoQueries.findFamilyInfoSt(id);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        } else {
+            return response.status(400).json(query.error);
         }
+
 
     }
 
     /**Para actualizar un familo  */
-    async updateStfamil(id, famil) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const row = await familyInfoModel.update(famil, {
-                where: { idst: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el familo: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'familo actualizado correctamente', data: row };
+    async updateStfamilyInfo(request, response) {
+
+        const id = request.params.id;
+        const familyInfo = request.body;
+
+        const query = await familyInfoQueries.updateStfamilyInfo(id, familyInfo);
+
+        if (query.ok) {
+            return response.status(200).json(query.message);
+        } else {
+            return response.status(400).json(query.error);
         }
 
     }
@@ -55,4 +54,4 @@ class familyInfoQueries {
 
 }
 
-export const familyInfoQueries = new familyInfoQueries();
+export const familyInfoController = new familyInfoController();

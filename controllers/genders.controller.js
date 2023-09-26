@@ -1,72 +1,50 @@
 import { query } from "express"
-import { genderModel, gendersModel } from "../models/genders.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
-
+import { gendersQueries } from "../sql/genders.queries.js"
+import { request, response } from 'express';
 class gendersQueries {
 
     /**Para meter géneros */
 
-    async store(gender) {
-        try {
-            
-            const search = await gendersModel.findOne({ where: { gender: gender.gender } });
+    async store(request, response) {
+        const gender = request.body;
 
-            if (resultadoDB.equals(search) ? true : false) {
+        const query = await gendersQueries.store(gender);
 
-                throw new Exception("El valor ya existe en la base de datos.");
-
-            } else {
-
-                const query = await advisorsModel.create(gender);
-            }
-            
-        } catch (error) {
-
-            console.log('error: ', error);
-
-            return error(`Error al crear el género: ${error.message}`);
-
-        } finally {
-
-            return { ok: true, data: query };
+        if (query.ok) {
+            return response.status(201).json(query.data);
+        }else {
+            return response.status(400).json(query.error);
         }
+        
+
     }
 
     /**para buscar gender */
-    async findGender(id) {
-        try {
-            const query = await gendersModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al encontrar el género: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findGender(request, response) {
+        const id = request.params.id;
+
+        const query = await gendersQueries.findGender(id);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        }else{
+            return response.status(400).json(query.error);
         }
 
     }
 
     /**Para actualizar la info de un género */
-    async updateGender(id, gender) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const row = await gendersModel.update(gender, {
-                where: { id: id },
-            });
-        } catch (error) {
+    async updateGender(request, response) {
 
-            console.log('error: ', error);
+        const id = request.params.id;
+        const gender = request.body;
 
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+        const query = gendersQueries.updateGender(id, gender)
 
-        } finally {
-            
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+        if (query.ok) {
+            return response.status(200).json(query.message);
+        }else{
+            return response.status(400).json(query.error);
         }
 
     }

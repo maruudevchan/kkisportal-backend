@@ -1,58 +1,61 @@
 import { query } from "express"
-import { contactsModel } from "../models/colonias.js"
+import { contactsQueries } from "../sql/contacts.queries.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
+import { request, response } from 'express';
+import { Payload } from '../helpers/payload.js';
 
-class contactsQueries {
+
+class contactsController {
 
     /**Para meter contactos */
 
-    async store(contact) {
-        try {
-            const query = await contactsModel.create(contact);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el contacto: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const contact = request.body;
+
+        const query = await contactsQueries.store(contact);
+
+        if (query.ok) {
+            return response.status(201).json(query.data);
+        } else {
+            return response.status(400).json(query.error);
         }
+
+        
     }
 
     /**para buscar contact por ID */
-    async findStContacts(id) {
-        try {
-            const query = await contactsModel.findOne(
-                {
-                    where:
-                        { idst: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findStContacts(request, response) {
+        const id = request.params.id;
+
+        const query = await contactsQueries.findContacts(id);
+
+        if (query.ok) {
+            return response.status(200).json(query.data);
+        } else {
+            return response.status(400).json(query.error);
         }
+
 
     }
 
     /**Para actualizar un contacto  */
-    async updateStContact(id, contact) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const row = await contactsModel.update(contact, {
-                where: { idst: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el contacto: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Contacto actualizado correctamente', data: row };
-        }
+    async updateStContact(request, response) {
+           
+            const id = request.params.id;
+            const contact = request.body;
+    
+            const query = await contactsQueries.updateStContact(id, contact);
+    
+            if (query.ok) {
+                return response.status(200).json(query.message);
+            } else {
+                return response.status(400).json(query.error);
+            }
 
     }
 
 
 }
 
-export const contactsQueries = new contactsQueries();
+export const contactsController = new contactsController();

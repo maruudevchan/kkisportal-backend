@@ -33,7 +33,7 @@ class catNotasQueries {
 
     }
 
-    async updatecatNotas(idst, catNotas) {
+    async updateNotas(idst, catNotas) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
             const [updatedRows] = await catNotasModel.update(catNotas)({

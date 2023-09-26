@@ -1,58 +1,51 @@
 import { query } from "express"
-import { carreersModel } from "../models/carreers.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { carreersQueries } from "../sql/carreers.queries.js"
+import { request, response } from 'express';
+import { Payload } from '../helpers/payload.js';
 
-class carreersQueries {
+class carreersController {
 
     /**Para meter carreers */
 
-    async store(carreers) {
-        try {
-            const query = await carreersModel.create(carreers);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
-        }
-    }
+    async addCarreer(request, response) {
+        const addCarreer = request.body;
 
-    /**para buscar carreers por ID */
-    async findcarreer(id) {
-        try {
-            const query = await carreersModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la carrera: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+        const query = await carreersQueries.store(carreer);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
-    /**Para actualizar un carreers*/
-    async updatecarreers(id, carreers) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await carreersModel.update(carreers)({
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la carrera: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Carrera actualizada correctamente' };
+    /**para buscar carreer por ID */
+    async findcarreer(request, response) {
+        const id = request.id;
+        const query = await carreersQueries.findCarreer(id);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
+    /**Para actualizar un carreer */
+    async updateCarreer(request, response) {
+        const carreer = request.body;
+        const query = await carreersQueries.updateCarreer(carreer);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
+        }
+
+    }
 
 }
 
-export const carreersQueries = new carreersQueries();
+export const carreersController = new carreersController();

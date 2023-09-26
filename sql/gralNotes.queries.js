@@ -3,7 +3,7 @@ import { gralNotesModel } from "../models/gralNotes.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class gralNotes{
+class gralNotesQueries{
     
     async store(gralNotes) {
         try {
@@ -53,4 +53,4 @@ class gralNotes{
 
 }
 
-export const gralNotesQueries = new gralNotes();
+export const gralNotesQueries = new gralNotesQueries();

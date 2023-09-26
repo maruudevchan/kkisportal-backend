@@ -1,52 +1,52 @@
 import { query } from "express"
-import { catNotasModel } from "../models/catNotas.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { catNotasQueries } from "../sql/catNotas.queries.js"
+import { request, response } from 'express';
+import { Payload } from '../helpers/payload.js';
 
-class catNotasQueries {
+class catNotasController {
 
-    async store(catNotas) {
-        try {
-            const query = await catNotasModel.create(catNotas);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la nota: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
-        }
-    }
+    /**Para meter notas */
 
-    async findcatNotas(idst) {
-        try {
-            const query = await catNotasModel.findOne(
-                {
-                    where:
-                        { idst: idst }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la nota: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async addNota(request, response) {
+        const nota = request.body;
+
+        const query = await catNotasQueries.store(nota);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
-    async updatecatNotas(idst, catNotas) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await catNotasModel.update(catNotas)({
-                where: { idst: idst },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la nota: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Nota actualizada correctamente' };
+    /**para buscar notas por ID */
+    async findNotas(request, response) {
+        const idst = request.id;
+        const query = await catNotasQueries.findNotas(idst);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
         }
 
-    }   
+    }
+
+    /**Para actualizar una nota */
+    async updateNotas(request, response) {
+        const idst = request.body.idst;
+        const catNotas = request.body;
+        const query = await catNotasQueries.updateNotas(idst, catNotas);
+
+        if (query.ok) {
+            return response.status(200).json({ ok: true, data: query.data });
+        } else {
+            return response.status(500).json({ ok: false, error: query.error });
+        }
+
+    }
+
 }
 
-export const catNotasQueries = new catNotasQueries();
+export const catNotasController = new catNotasController();
