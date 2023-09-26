@@ -1,61 +1,71 @@
 /*sql
-CREATE TABLE `collegeGrades` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `idst` int,
-  `term1SeasonY` VARCHAR(10),
-  `term1GPA` FLOAT,
-  `eng1GPA` FLOAT,
-  `term2SeasonY` VARCHAR(10),
-  `term2GPA` FLOAT,
-  `eng2GPA` FLOAT,
-  `term3SeasonY` VARCHAR(10),
-  `term3GPA` FLOAT,
-  `eng3GPA` FLOAT,
-  `term4SeasonY` VARCHAR(10),
-  `term4GPA` FLOAT,
-  `eng4GPA` FLOAT,
-  `term5SeasonY` VARCHAR(10),
-  `term5GPA` FLOAT,
-  `eng5PA` FLOAT,
-  `term6SeasonY` VARCHAR(10),
-  `term6GPA` FLOAT,
-  `eng6GPA` FLOAT,
-  `term7SeasonY` VARCHAR(10),
-  `term7GPA` FLOAT,
-  `eng7GPA` FLOAT,
-  `term8SeasonY` VARCHAR(10),
-  `term8GPA` FLOAT,
-  `eng8GPA` FLOAT,
-  `term9SeasonY` VARCHAR(10),
-  `term9GPA` FLOAT,
-  `eng9GPA` FLOAT,
-  `term10SeasonY` VARCHAR(10),
-  `term10GPA` FLOAT,
-  `eng10GPA` FLOAT,
-  `term11SeasonY` VARCHAR(10),
-  `term11GPA` FLOAT,
-  `eng11GPA` FLOAT,
-  `term12SeasonY` VARCHAR(10),
-  `term12GPA` FLOAT,
-  `eng12GPA` FLOAT,
-  `term13SeasonY` VARCHAR(10),
-  `term13GPA` FLOAT,
-  `eng13GPA` FLOAT,
-  `cuUniGrade` FLOAT,
-  `cuEnGrade` FLOAT,
-  `hasDeliveredGrades` BOOLEAN,
-  `hasPaymentBill` BOOLEAN,
-  `hasPendings` BOOLEAN,
-  `hasReport` BOOLEAN
+-- Definición de la tabla 'collegeGrades'
+CREATE TABLE collegeGrades (
+  id INT PRIMARY KEY,
+  idst INT,
+  term1SeasonY VARCHAR(10),
+  term1GPA FLOAT,
+  eng1GPA FLOAT,
+  hasReport1 BOOLEAN,
+  term2SeasonY VARCHAR(10),
+  term2GPA FLOAT,
+  eng2GPA FLOAT,
+  hasReport2 BOOLEAN,
+  term3SeasonY VARCHAR(10),
+  term3GPA FLOAT,
+  eng3GPA FLOAT,
+  hasReport3 BOOLEAN,
+  term4SeasonY VARCHAR(10),
+  term4GPA FLOAT,
+  eng4GPA FLOAT,
+  hasReport4 BOOLEAN,
+  term5SeasonY VARCHAR(10),
+  term5GPA FLOAT,
+  eng5GPA FLOAT,
+  hasReport5 BOOLEAN,
+  term6SeasonY VARCHAR(10),
+  term6GPA FLOAT,
+  eng6GPA FLOAT,
+  hasReport6 BOOLEAN,
+  term7SeasonY VARCHAR(10),
+  term7GPA FLOAT,
+  eng7GPA FLOAT,
+  hasReport7 BOOLEAN,
+  term8SeasonY VARCHAR(10),
+  term8GPA FLOAT,
+  eng8GPA FLOAT,
+  hasReport8 BOOLEAN,
+  term9SeasonY VARCHAR(10),
+  term9GPA FLOAT,
+  eng9GPA FLOAT,
+  hasReport9 BOOLEAN,
+  term10SeasonY VARCHAR(10),
+  term10GPA FLOAT,
+  eng10GPA FLOAT,
+  hasReport10 BOOLEAN,
+  term11SeasonY VARCHAR(10),
+  term11GPA FLOAT,
+  eng11GPA FLOAT,
+  hasReport11 BOOLEAN,
+  term12SeasonY VARCHAR(10),
+  term12GPA FLOAT,
+  eng12GPA FLOAT,
+  hasReport12 BOOLEAN,
+  term13SeasonY VARCHAR(10),
+  term13GPA FLOAT,
+  eng13GPA FLOAT,
+  hasReport13 BOOLEAN,
+  FOREIGN KEY (idst) REFERENCES schoolars(id)
 );
+
 */
 
 import {Model, DataTypes} from 'sequelize';
 import { DatabaseConfig } from '../config/database.js';
 
-export class collegeGradeModel extends Model {}
+export class collegeGradesModel extends Model {}
 
-collegeGradeModel.init({
+collegeGradesModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -69,6 +79,22 @@ collegeGradeModel.init({
             key: 'id'
         }
     },
+    term0SeasonY: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+    },
+    term0GPA: {
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    eng0GPA: {
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport0: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term1SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -79,6 +105,10 @@ collegeGradeModel.init({
     },
     eng1GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport1: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term2SeasonY: {
@@ -93,6 +123,10 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    hasReport2: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term3SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -103,6 +137,10 @@ collegeGradeModel.init({
     },
     eng3GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport3: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term4SeasonY: {
@@ -117,6 +155,10 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    hasReport4: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term5SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -125,8 +167,12 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
-    eng5PA: {
+    eng5GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport5: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term6SeasonY: {
@@ -141,6 +187,10 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    hasReport6: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term7SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -151,6 +201,10 @@ collegeGradeModel.init({
     },
     eng7GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport7: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term8SeasonY: {
@@ -165,6 +219,10 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    hasReport8: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term9SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -175,6 +233,10 @@ collegeGradeModel.init({
     },
     eng9GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport9: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term10SeasonY: {
@@ -189,6 +251,10 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    hasReport10: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     term11SeasonY: {
         type: DataTypes.STRING(10),
         allowNull: false
@@ -199,6 +265,10 @@ collegeGradeModel.init({
     },
     eng11GPA: {
         type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    hasReport11: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     term12SeasonY: {
@@ -213,42 +283,11 @@ collegeGradeModel.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
-    term13SeasonY: {
-        type: DataTypes.STRING(10),
-        allowNull: false
-    },
-    term13GPA: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    eng13GPA: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    cuUniGrade: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    cuEnGrade: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    hasDeliveredGrades: {
+    hasReport12: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
-    hasPaymentBill: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    hasPendings: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    hasReport: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    }
+
 }, {
     sequelize: DatabaseConfig,
     modelName: 'collegeGrades',
