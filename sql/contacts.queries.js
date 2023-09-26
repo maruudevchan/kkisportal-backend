@@ -54,3 +54,5 @@ class contactsQueries {
 
 
 }
+
+export const contactsQueries = new contactsQueries();

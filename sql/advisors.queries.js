@@ -54,3 +54,5 @@ class advisorsQueries {
 
 
 }
+
+export const advisorsQueries = new advisorsQueries();

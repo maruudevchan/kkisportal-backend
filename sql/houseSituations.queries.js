@@ -62,3 +62,5 @@ class HouseSituationsQueries {
 
 
 }
+
+export const houseSituationsQueries = new HouseSituationsQueries();

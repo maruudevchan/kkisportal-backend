@@ -1,18 +1,18 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { schoolsModel } from "../models/schools.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class advisorsQueries {
 
-    /**Para meter advisors */
+    /**Para meter escuelas */
 
-    async store(advisor) {
+    async store(school) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await schoolsModel.create(school);
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al crear la escuela: ${error.message}`);
         } finally {
             return { ok: true, data: query };
         }
@@ -21,7 +21,7 @@ class advisorsQueries {
     /**para buscar advisor por ID */
     async findAdvisor(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await schoolsModel.findOne(
                 {
                     where:
                         { id: id }
@@ -29,7 +29,7 @@ class advisorsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al actualizar: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
@@ -37,17 +37,17 @@ class advisorsQueries {
     }
 
     /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    async updateSchool(id, school) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const query = await schoolsModel.update(school, {
                 where: { id: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar la escuela: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, message: 'Escuela actualizada correctamente' };
         }
 
     }

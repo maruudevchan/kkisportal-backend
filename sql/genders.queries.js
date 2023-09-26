@@ -3,7 +3,7 @@ import { genderModel, gendersModel } from "../models/genders.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class gendersQueries {
 
     /**Para meter géneros */
 
@@ -73,3 +73,5 @@ class advisorsQueries {
 
 
 }
+
+export const gendersQueries = new gendersQueries();

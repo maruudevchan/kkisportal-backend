@@ -48,3 +48,5 @@ class catNotasQueries {
 
     }   
 }
+
+export const catNotasQueries = new catNotasQueries();

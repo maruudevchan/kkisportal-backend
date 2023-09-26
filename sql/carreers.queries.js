@@ -54,3 +54,5 @@ class carreersQueries {
 
 
 }
+
+export const carreersQueries = new carreersQueries();

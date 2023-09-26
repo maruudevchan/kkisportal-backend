@@ -1,15 +1,15 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { statusModel } from "../models/status.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class statusQueries {
 
-    /**Para meter advisors */
+    /**Para meter status */
 
-    async store(advisor) {
+    async store(status) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await statusModel.create(status);
         } catch (error) {
             console.log('error: ', error);
             return error(`Error al crear el asesor: ${error.message}`);
@@ -19,9 +19,9 @@ class advisorsQueries {
     }
 
     /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    async findStatus(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await statusModel.findOne(
                 {
                     where:
                         { id: id }
@@ -29,25 +29,25 @@ class advisorsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar el status: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    /**Para actualizar un status */
+    async updateAdvisor(id, status) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const query = await statusModel.update(status, {
                 where: { id: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar el status: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, message: 'Status actualizado correctamente' };
         }
 
     }

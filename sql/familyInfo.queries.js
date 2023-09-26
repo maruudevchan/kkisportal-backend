@@ -54,3 +54,5 @@ class familyInfoQueries {
 
 
 }
+
+export const familyInfoQueries = new familyInfoQueries();

@@ -1,53 +1,55 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { surveys, surveysModel } from "../models/surveys.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class surveyssQueries {
 
-    /**Para meter advisors */
+    /**Para meter encuestas */
 
-    async store(advisor) {
+    async store(surveys) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await surveysModel.create(surveys);
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al crear la encuesta: ${error.message}`);
         } finally {
             return { ok: true, data: query };
         }
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    /**para buscar encuesta por ID */
+    async findSurveySchoolar(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await surveysModel.findOne(
                 {
                     where:
-                        { id: id }
+                        { idst: id }
                 }
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al crear el survey: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+     /**para buscar encuesta por ID */
+     async updateSurveSchoolar(id) {
         try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
-                where: { id: id },
-            });
+            const query = await surveysModel.findOne(
+                {
+                    where:
+                        { idst: id }
+                }
+            );
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return error(`Error al actualizar el survey: ${error.message}`);
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, data: query.data };
         }
 
     }

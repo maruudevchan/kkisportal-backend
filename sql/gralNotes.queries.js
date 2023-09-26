@@ -52,3 +52,5 @@ class gralNotes{
 
 
 }
+
+export const gralNotesQueries = new gralNotes();

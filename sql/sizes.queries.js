@@ -1,27 +1,27 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { sizesModel } from "../models/sizes.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class sizesQueries {
 
-    /**Para meter advisors */
+    /**Para meter sizes */
 
-    async store(advisor) {
+    async store(size) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await sizesModel.create(size);
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al crear la talla: ${error.message}`);
         } finally {
             return { ok: true, data: query };
         }
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    /**para buscar size por ID */
+    async findSize(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await sizesModel.findOne(
                 {
                     where:
                         { id: id }
@@ -29,25 +29,25 @@ class advisorsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar la talla: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    /**Para actualizar una talla */
+    async updateSize(id, size) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const query = await sizesModel.update(size, {
                 where: { id: id },
             });
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar la talla: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
+            return { ok: true, message: 'talla actualizado correctamente' };
         }
 
     }
