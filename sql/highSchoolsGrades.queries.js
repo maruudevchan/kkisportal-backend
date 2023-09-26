@@ -1,5 +1,5 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import { jrHighGrades } from "../models/advisors.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 

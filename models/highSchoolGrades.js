@@ -26,9 +26,9 @@ CREATE TABLE `jrHighGrades` (
 import { DataTypes, Model } from 'sequelize';
 import {DatabaseConfig} from '../config/database.js';
 
-export class jrHighGradesModel extends Model {}
+export class highSchoolGradesModel extends Model {}
 
-jrHighGradesModel.init({
+highSchoolGradesModel.init({
 
     id: {
         type: DataTypes.INTEGER,
@@ -113,7 +113,7 @@ jrHighGradesModel.init({
     }
 }, {
     sequelize: DatabaseConfig,
-    modelName: 'jrHighGradesModel',
-    tableName: 'jrHighGrades',
+    modelName: 'highSchoolGradesModel',
+    tableName: 'highschoolGrades',
     timestamps: false
 });
