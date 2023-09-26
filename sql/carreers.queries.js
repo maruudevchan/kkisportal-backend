@@ -19,7 +19,7 @@ class carreersQueries {
     }
 
     /**para buscar carreers por ID */
-    async findcarreer(id) {
+    async findCarreer(id) {
         try {
             const query = await carreersModel.findOne(
                 {
@@ -37,7 +37,7 @@ class carreersQueries {
     }
 
     /**Para actualizar un carreers*/
-    async updatecarreers(id, carreers) {
+    async updateCarreers(id, carreers) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
             const [updatedRows] = await carreersModel.update(carreers)({

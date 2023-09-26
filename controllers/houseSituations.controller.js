@@ -1,27 +1,31 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
+import {houseSituationsModel} from "../models/houseSituations.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class HouseSituationsQueries {
 
-    /**Para meter advisors */
+    /**Para meter situaciones */
 
-    async store(advisor) {
+    async store(HouseSituation) {
         try {
-            const query = await advisorsModel.create(advisor);
+            const query = await houseSituationsModel.create(HouseSituation);
         } catch (error) {
+
             console.log('error: ', error);
             return error(`Error al crear el asesor: ${error.message}`);
+
         } finally {
+
             return { ok: true, data: query };
+
         }
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    /**para buscar HouseSituations por ID */
+    async findHouseSituations(id) {
         try {
-            const query = await advisorsModel.findOne(
+            const query = await houseSituationsModel.findOne(
                 {
                     where:
                         { id: id }
@@ -29,24 +33,28 @@ class advisorsQueries {
             );
         } catch (error) {
             console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
+            return error(`Error al buscar la situación: ${error.message}`);
         } finally {
             return { ok: true, data: query.data };
         }
 
     }
 
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
+    /**Para actualizar un houseSituations */
+    async updatehouseSituations(id, houseSituation) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
+            const [updatedRows] = await houseSituationsModel.update(houseSituation, {
                 where: { id: id },
             });
+
         } catch (error) {
+
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
+            return { ok: false, error: `Error al actualizar la situación: ${error.message}` };
+
         } finally {
+            
             return { ok: true, message: 'Asesor actualizado correctamente' };
         }
 
@@ -55,4 +63,4 @@ class advisorsQueries {
 
 }
 
-export const advisorsQueries = new advisorsQueries();
+export const houseSituationsQueries = new HouseSituationsQueries();

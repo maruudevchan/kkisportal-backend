@@ -1,5 +1,5 @@
 import { query } from "express"
-import { highSchoolGradesModel } from "../models/highSchoolGrades.js"
+import { highSchoolGradesModel  } from "../models/highSchoolGrades.js"
 import { http } from "http"
 import { Op as Op, Sequelize } from 'sequelize'
 
@@ -28,7 +28,7 @@ class highSchoolGradesQueries {
             console.log('error: ', error);
             return error(`Error al crear el registro de calificaciones: ${error.message}`);
         } finally {
-
+            
             return { ok: true, data: query };
         }
     }
@@ -66,8 +66,8 @@ class highSchoolGradesQueries {
 
     //Para promediar general y para promediar inglés de cada periodo
 
-    async averageGral(idst) {
-        try {
+    async averageGralEng(idst) {
+        try{
             //primero promediamos general
 
             const gralAverage = highSchoolGradesModel.findOne({
@@ -78,22 +78,10 @@ class highSchoolGradesQueries {
                     [Sequelize.literal(
                         'sem1GPA + sem2GPA +  sem3GPA + sem4GPA + sem5GPA + sem6GPA'
                     )]
-                ]
-            })
-
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al promediar las calificaciones: ${error.message}`);
-        } finally {
-            return { ok: true, data: gralAverage };
-        }
-    }
-
-
-    async averageEng(idst) {
-        try {
+                ]})
 
             //ahora promediamos inglés
+
             const engAverage = highSchoolGradesModel.findOne({
                 where: {
                     idst: idst
@@ -102,39 +90,16 @@ class highSchoolGradesQueries {
                     [Sequelize.literal(
                         'enG1GPA + enG2GPA + enG3GPA + enG4GPA + enG5GPA + enG6GPA'
                     )]
-                ]
-            })
-
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al promediar las calificaciones: ${error.message}`);
-
-        } finally {
-            return { ok: true, data: engAverage };
-        }
-
-    }
-
-    //verifico los reportes pendientes
-    async verifyReports(idst) {
-        try{
-            //hago el querysearch
-            const query = await highSchoolGradesModel.findOne({
-                where: {
-                    idst: idst
-                },
-                attributes: [
-                    'hasReport1', 'hasReport2', 'hasReport3', 'hasReport4', 'hasReport5', 'hasReport6',
-                ]
-            })
+                ]})
 
         }catch(error){
-            console.log('error: ', error);
-            return error(`Error al verificar los reportes: ${error.message}`);
+
         }finally{
-            return { ok: true, data: query };
+
         }
+
     }
+
 
 }
 
