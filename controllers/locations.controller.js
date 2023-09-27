@@ -1,56 +1,53 @@
 import { query } from "express"
-import { locationsModel } from "../models/locations.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { locationsQueries } from "../sql/locations.queries.js"
+import { request, response } from 'express';
 
-class advisorsQueries {
+class locationsController {
 
     /**Para meter ciudades */
 
-    async store(location) {
-        try {
-            const query = await locationsModel.create(location);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la ubicación: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const location = request.body;
+        const query = await locationsQueries.store(location);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
+        
+        
     }
 
     /**para buscar ciudad por ID */
-    async findLocation(id) {
-        try {
-            const query = await locationsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar el id: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findLocation(request, response) {
+        const id = request.id;
+        const query = await locationsQueries.findLocation(id);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
+
 
     }
 
     /**Para actualizar una ciudad */
-    async updateAdvisor(id, location) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const update = await locationsModel.update(location, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la ciudad : ${error.message}` };
-        } finally {
-            return { ok: true, message: 'ciudad actualizada correctamente' };
+    async updateAdvisor(request, response) {
+        const id = request.id;
+        const location = request.body;
+        const query = await locationsQueries.updateAdvisor(id, location);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
 
     }
 
 
 }
+
+export const LocationsController = new locationsController();

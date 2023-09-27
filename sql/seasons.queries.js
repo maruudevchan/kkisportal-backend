@@ -3,7 +3,7 @@ import { seasonsModel } from "../models/seasons.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class seasonsQueries {
 
     /**para buscar season por ID */
     async findSeason(id) {
@@ -25,3 +25,5 @@ class advisorsQueries {
 
 
 }
+
+export const seasonsQueries = new seasonsQueries();

@@ -1,56 +1,50 @@
 import { query } from "express"
-import { personalStsModel } from "../models/personalSts.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { personalStsQueries } from "../sql/personalSts.queries.js"
+import { request, response } from "express"
 
-class advisorsQueries {
+class personalStsController {
 
     /**Para meter situaciones personales */
 
-    async store(personalSt) {
-        try {
-            const query = await personalStsModel.create(personalSt);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la situación personal: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const personalSt = request.body;
+        const query = await personalStsQueries.store(personalSt);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
     }
 
     /**para buscar la situación personal por ID del student */
-    async findAdvisor(idst) {
-        try {
-            const query = await personalStsModel.findOne(
-                {
-                    where:
-                        { idst: idst}
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la situación del alumno: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findPersonalSts(request, response) {
+        const idst = request.idst;
+        const query = await personalStsQueries.findPersonalSts(idst);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
 
     }
 
     /**Para actualizar una situación familiar */
-    async updatePersonalSts(idst, personalSt) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await personalSt.update(personalSt, {
-                where: { idst: idst },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la situación del estudiante: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Situación actualizada correctamente' };
+    async updatePersonalSts(request, response) {
+        const idst = request.idst;
+        const personalSt = request.body;
+        const query = await personalStsQueries.updatePersonalSts(idst, personalSt);
+
+        if (query.ok) {
+            response.status(200).json(query.message);
+        } else {
+            response.status(400).json({ error: query.error });
         }
 
     }
 
-
 }
+
+export const personalStsController = new personalStsController();

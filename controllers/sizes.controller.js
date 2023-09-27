@@ -1,56 +1,47 @@
 import { query } from "express"
 import { sizesModel } from "../models/sizes.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { request, response } from "express";
 
-class sizesQueries {
+class sizesController {
 
     /**Para meter sizes */
 
-    async store(size) {
-        try {
-            const query = await sizesModel.create(size);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la talla: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const size = request.body;
+        const query = await sizesQueries.store(size);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
     }
 
     /**para buscar size por ID */
-    async findSize(id) {
-        try {
-            const query = await sizesModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la talla: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
-        }
+    async findSize(request, response) {
+        const id = request.id;
+        const query = await sizesQueries.findSize(id);
 
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
     }
 
     /**Para actualizar una talla */
-    async updateSize(id, size) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await sizesModel.update(size, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la talla: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'talla actualizado correctamente' };
+    async updateSize(request, response) {
+        const id = request.id;
+        const size = request.body;
+        const query = await sizesQueries.updateSize(id, size);
+
+        if (query.ok) {
+            response.status(200).json(query.message);
+        } else {
+            response.status(400).json({ error: query.error });
         }
-
     }
-
-
 }
+
+export const sizesController = new sizesController();

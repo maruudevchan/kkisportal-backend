@@ -54,3 +54,5 @@ class languagesQueries {
 
 
 }
+
+export const languagesQueries = new languagesQueries();

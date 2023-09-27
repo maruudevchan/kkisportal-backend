@@ -3,7 +3,7 @@ import { locationsModel } from "../models/locations.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class locationsQueries{
 
     /**Para meter ciudades */
 
@@ -37,7 +37,7 @@ class advisorsQueries {
     }
 
     /**Para actualizar una ciudad */
-    async updateAdvisor(id, location) {
+    async updateLocation(id, location) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
             const update = await locationsModel.update(location, {
@@ -54,3 +54,5 @@ class advisorsQueries {
 
 
 }
+
+export const locationsQueries = new locationsQueries();

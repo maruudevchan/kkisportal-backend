@@ -1,56 +1,51 @@
 import { query } from "express"
-import { languagesModel } from "../models/languages.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { languagesQueries } from "../sql/languages.queries.js"
+import { request, response } from 'express';
 
-class languagesQueries {
+
+class languagesController {
 
     /**Para meter languages */
 
-    async store(language) {
-        try {
-            const query = await languagesModel.create(language);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const language = request.body;
+        const query = await languagesQueries.store(language);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
+        
     }
 
     /**para buscar language por ID */
-    async findlanguage(id) {
-        try {
-            const query = await languagesModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findlanguage(request, response) {
+        const id = request.id;
+        const query = await languagesQueries.findlanguage(id);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
 
     }
 
     /**Para actualizar un language */
-    async updatelanguage(id, language) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await languagesModel.update(language, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el idioma: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Idioma actualizado correctamente' };
+    async updatelanguage(request, response) {
+        const language = request.body;
+        const query = await languagesQueries.updatelanguage(language);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
         }
 
     }
 
 
 }
+
+export const LanguagesController = new languagesController();

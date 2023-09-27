@@ -52,5 +52,6 @@ class sizesQueries {
 
     }
 
-
 }
+
+export const sizesQueries = new sizesQueries();

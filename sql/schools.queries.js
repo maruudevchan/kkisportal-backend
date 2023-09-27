@@ -3,7 +3,7 @@ import { schoolsModel } from "../models/schools.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class aschoolsQueries {
 
     /**Para meter escuelas */
 
@@ -19,7 +19,7 @@ class advisorsQueries {
     }
 
     /**para buscar advisor por ID */
-    async findAdvisor(id) {
+    async findSchool(id) {
         try {
             const query = await schoolsModel.findOne(
                 {
@@ -54,3 +54,5 @@ class advisorsQueries {
 
 
 }
+
+export const schoolsQueries = new aschoolsQueries();

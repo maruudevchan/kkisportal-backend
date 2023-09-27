@@ -1,56 +1,50 @@
 import { query } from "express"
-import { statusModel } from "../models/status.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { statusQueries } from "../sql/status.queries.js"
+import { request, response } from 'express';
 
-class statusQueries {
+class statusController {
 
     /**Para meter status */
 
-    async store(status) {
-        try {
-            const query = await statusModel.create(status);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const status = request.body;
+        const query = await statusQueries.store(status);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+       
     }
 
-    /**para buscar advisor por ID */
-    async findStatus(id) {
-        try {
-            const query = await statusModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar el status: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
-        }
+    /**para buscar un status por ID */
+    async findStatus(request, response) {
+        const id = request.id;
+        const query = await statusQueries.findStatus(id);
 
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+        
     }
 
     /**Para actualizar un status */
-    async updateAdvisor(id, status) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await statusModel.update(status, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el status: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Status actualizado correctamente' };
-        }
+    async updateAdvisor(request, response) {
+        const id = request.id;
+        const status = request.body;
+        const query = await statusQueries.updateStatus(id, status);
 
+        if (query.ok) {
+            response.status(200).json(query.message);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+        
     }
 
-
 }
+
+export const statusController = new statusController();

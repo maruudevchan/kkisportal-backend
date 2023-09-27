@@ -1,56 +1,52 @@
 import { query } from "express"
-import { schoolarsModel } from "../models/schoolars.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { schoolarsQueries } from "../sql/schoolars.queries.js"
+import { request, response } from "express"
 
-class advisorsQueries {
+class schoolarsController {
 
     /**Para meter becados */
 
-    async store(student) {
-        try {
-            const query = await schoolarsModel.create(student);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al guardar la información nueva: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const student = request.body;
+        const query = await schoolarsQueries.store(student);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
     }
 
     /**para buscar schoolar por ID */
-    async findSchoolar(id) {
-        try {
-            const query = await schoolarsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar el becado: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findSchoolar(request, response) {
+        const id = request.id;
+        const query = await schoolarsQueries.findSchoolar(id);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
 
     }
 
     /**Para actualizar un estudiante */
-    async updateSchoolar(id, schoolar) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await schoolarsModel.update(schoolar, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el estudiante: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Becado actualizado correctamente' };
+    async updateSchoolar(request, response) {
+        const id = request.id;
+        const schoolar = request.body;
+
+        const query = await schoolarsQueries.updateSchoolar(id, schoolar);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
 
     }
 
-
 }
+
+export const schoolarsController = new schoolarsController();

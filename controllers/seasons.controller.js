@@ -1,25 +1,20 @@
 import { query } from "express"
-import { seasonsModel } from "../models/seasons.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { seasonQueries } from "../sql/seasons.queries.js"
+import { request, response } from 'express';
 
-class advisorsQueries {
+class seasonsController {
 
     /**para buscar season por ID */
-    async findSeason(id) {
-        try {
-            const query = await seasonsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar la temporada: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findSeason(request, response) {
+        const id = request.id;
+        const query = await seasonsQueries.findSeason(id);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+       
 
     }
 

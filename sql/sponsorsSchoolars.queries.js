@@ -58,18 +58,22 @@ class sponsorsSchoolarsQueries {
 
 
     /**Para actualizar quién patrocina al becado */
-    async updateSponsor(idst) {
+    async updateSponsor(idst, sponsor) {
         try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await sponsorsSchoolarsModel.update(idst, {
-                where: { idst: idst },
-            });
+            const query = await sponsorsSchoolarsModel.update(
+                { sponsor: sponsor },
+                {
+                    where:
+                        { idst: idst }
+                }
+            );
         } catch (error) {
             console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el sponsor del becado: ${error.message}` };
+            return error(`Error al actualizar el sponsor del becado: ${error.message}`);
         } finally {
-            return { ok: true, message: 'Becado actualizado correctamente' };
+            return { ok: true, data: query.data };
         }
+        
 
     }
 

@@ -1,56 +1,50 @@
 import { query } from "express"
-import { advisorsModel } from "../models/advisors.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { sponsorsQueries } from "../sql/sponsors.queries.js"
+import { request, response } from 'express';
 
-class advisorsQueries {
 
-    /**Para meter advisors */
+class sponsorsQueries {
 
-    async store(advisor) {
-        try {
-            const query = await advisorsModel.create(advisor);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    /**Para meter sponsors */
+
+    async store(request, response) {
+        const sponsor = request.body;
+        const query = await sponsorsQueries.store(sponsor);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
     }
 
     /**para buscar advisor por ID */
-    async findAdvisor(id) {
-        try {
-            const query = await advisorsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear el asesor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findSponsor(request, response) {
+        const id = request.id;
+        const query = await sponsorsQueries.findSponsor(id);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+        
+    }
+
+    /**Para actualizar un sponsor */
+    async updateSponsor(request, response) {
+        const id = request.id;
+        const sponsor = request.body;
+        const query = await sponsorsQueries.updateSponsor(id, sponsor);
+
+        if (query.ok) {
+            response.status(200).json(query.message);
+        } else {
+            response.status(400).json({ error: query.error });
         }
 
     }
-
-    /**Para actualizar un advisor */
-    async updateAdvisor(id, advisor) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await advisorsModel.update(advisor, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el asesor: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Asesor actualizado correctamente' };
-        }
-
-    }
-
-
 }
+
+export const sponsorsQueries = new sponsorsQueries();

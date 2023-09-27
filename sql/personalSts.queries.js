@@ -3,7 +3,7 @@ import { personalStsModel } from "../models/personalSts.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class personalStsQueries {
 
     /**Para meter situaciones personales */
 
@@ -19,7 +19,7 @@ class advisorsQueries {
     }
 
     /**para buscar la situación personal por ID del student */
-    async findAdvisor(idst) {
+    async findPersonalSts(idst) {
         try {
             const query = await personalStsModel.findOne(
                 {
@@ -47,10 +47,10 @@ class advisorsQueries {
             console.log('error: ', error);
             return { ok: false, error: `Error al actualizar la situación del estudiante: ${error.message}` };
         } finally {
-            return { ok: true, message: 'Situación actualizada correctamente' };
+            return { ok: true, message: 'Situación actualizafa correctamente' };
         }
 
     }
-
-
 }
+
+export const personalStsQueries = new personalStsQueries();

@@ -1,55 +1,50 @@
 import { query } from "express"
-import { schoolsModel } from "../models/schools.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { schoolsQueries } from "../sql/schools.queries.js"
+import { request, response } from 'express';
 
-class advisorsQueries {
+
+class schoolsController {
 
     /**Para meter escuelas */
 
-    async store(school) {
-        try {
-            const query = await schoolsModel.create(school);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al crear la escuela: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
+    async store(request, response) {
+        const school = request.body;
+        const query = await schoolsQueries.store(school);
+
+        if (query.ok) {
+            response.status(201).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
+        
     }
 
-    /**para buscar advisor por ID */
-    async findAdvisor(id) {
-        try {
-            const query = await schoolsModel.findOne(
-                {
-                    where:
-                        { id: id }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al actualizar: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    /**para buscar escuela por ID */
+    async findSchool(request, response) {
+        const id = request.id;
+        const query = await schoolsQueries.findSchool(id);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
         }
 
     }
 
-    /**Para actualizar un advisor */
+    /**Para actualizar una escuela */
     async updateSchool(id, school) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await schoolsModel.update(school, {
-                where: { id: id },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar la escuela: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Escuela actualizada correctamente' };
-        }
+        const id = request.id;
+        const school = request.body;
 
+        const query = await schoolsQueries.updateSchool(id, school);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+        
     }
 
 

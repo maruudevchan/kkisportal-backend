@@ -1,56 +1,46 @@
 import { query } from "express"
-import { sponsorsSchoolarsModel } from "../models/sponsorsSchoolars.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { sponsorsSchoolarsQueries } from "../sql/sponsorsSchoolars.queries.js"
+import { request, response } from 'express';
 
-class sponsorsSchoolarsQueries {
+class sponsorsSchoolarsController {
 
-    /**Para meter sizes */
+    /**Para registrar un becado de tal sponsor */
 
-    async store(schoolarSponsor) {
-        try {
-            const query = await sponsorsSchoolarsModel.create(schoolarSponsor);
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al registrar el becado al sponsor: ${error.message}`);
-        } finally {
-            return { ok: true, data: query };
-        }
+    async store(request, response) {
+        const schoolarSponsor = request.body;
+        const query = await sponsorsSchoolarsQueries.store(schoolarSponsor);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(500).json(query);
+        } 
+        
     }
 
     /**para buscar quién patrocina al becado */
-    async findSponsor(idst) {
-        try {
-            const query = await sponsorsSchoolarsModel.findOne(
-                {
-                    where:
-                        { idst: idst }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar el sponsor del becado: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findSponsor(request, response) {
+        const idst = request.idst;
+        const query = await sponsorsSchoolarsQueries.findSponsor(idst);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(500).json(query);
         }
 
     }
 
     /**para buscar todos los becados patrocinados por sponsor */
 
-    async findSchoolars(sponsor) {
-        try {
-            const query = await sponsorsSchoolarsModel.findAll(
-                {
-                    where:
-                        { sponsor: sponsor }
-                }
-            );
-        } catch (error) {
-            console.log('error: ', error);
-            return error(`Error al buscar los becados del patrocinador: ${error.message}`);
-        } finally {
-            return { ok: true, data: query.data };
+    async findSchoolars(request, response) {
+        const idsp = request.idsp;
+        const query = await sponsorsSchoolarsQueries.findSchoolars(idsp);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(500).json(query);
         }
 
     }
@@ -58,17 +48,15 @@ class sponsorsSchoolarsQueries {
 
 
     /**Para actualizar quién patrocina al becado */
-    async updateSponsor(idst) {
-        try {
-            // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const query = await sponsorsSchoolarsModel.update(idst, {
-                where: { idst: idst },
-            });
-        } catch (error) {
-            console.log('error: ', error);
-            return { ok: false, error: `Error al actualizar el sponsor del becado: ${error.message}` };
-        } finally {
-            return { ok: true, message: 'Becado actualizado correctamente' };
+    async updateSponsor(request, response) {
+        const idst = request.idst;
+        const sponsor = request.sponsor;
+        const query = await sponsorsSchoolarsQueries.updateSponsor(idst, idsp);
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(500).json(query);
         }
 
     }

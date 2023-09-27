@@ -3,7 +3,7 @@ import { schoolarsModel } from "../models/schoolars.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class advisorsQueries {
+class schoolarsQueries {
 
     /**Para meter becados */
 
@@ -54,3 +54,5 @@ class advisorsQueries {
 
 
 }
+
+export const schoolarsQueries = new schoolarsQueries();
