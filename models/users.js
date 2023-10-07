@@ -28,6 +28,10 @@ UsersModel.init({
     },
     birthdate: {
         type: DataTypes.DATE
+    },
+    isActive:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 }, {
     sequelize: DatabaseConfig,
