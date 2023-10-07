@@ -18,12 +18,10 @@ export class Payload{
             private_key = fs.readFileSync(pathToFileURL('..\\backend\\keys\\clave_privada.pem'), 'utf-8');
         }
 
-        const u_id = data.idUser;
-        const username = data.username;
+        const u_id = data.id;
        //el payload
         return jwt.sign({
-            user_id: u_id,
-            username: username,
+            id: u_id,
         },private_key,{algorithm: 'RS256', expiresIn: '2m'});
     
     }
