@@ -8,7 +8,7 @@ export const DatabaseConfig = new Sequelize(
         
         username: 'root',
         password: null,
-        database: 'chat',
+        database: 'kkisportal',
         host: '127.0.0.1',
         dialect: 'mysql',
         logging: false, /*si queremos ver consultas, pon true*/

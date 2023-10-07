@@ -1,15 +1,14 @@
-import { query } from "express"
-import { sponsorsQueries } from "../sql/sponsors.queries.js"
+import { SponsorsQueries } from "../sql/sponsors.queries.js"
 import { request, response } from 'express';
 
 
-class sponsorsQueries {
+class sponsorsController {
 
     /**Para meter sponsors */
 
     async store(request, response) {
         const sponsor = request.body;
-        const query = await sponsorsQueries.store(sponsor);
+        const query = await SponsorsQueries.store(sponsor);
 
         if (query.ok) {
             response.status(201).json(query.data);
@@ -22,7 +21,7 @@ class sponsorsQueries {
     /**para buscar advisor por ID */
     async findSponsor(request, response) {
         const id = request.id;
-        const query = await sponsorsQueries.findSponsor(id);
+        const query = await SponsorsQueries.findSponsor(id);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -36,7 +35,7 @@ class sponsorsQueries {
     async updateSponsor(request, response) {
         const id = request.id;
         const sponsor = request.body;
-        const query = await sponsorsQueries.updateSponsor(id, sponsor);
+        const query = await SponsorsQueries.updateSponsor(id, sponsor);
 
         if (query.ok) {
             response.status(200).json(query.message);
@@ -47,4 +46,4 @@ class sponsorsQueries {
     }
 }
 
-export const sponsorsQueries = new sponsorsQueries();
+export const SponsorsController = new sponsorsController();

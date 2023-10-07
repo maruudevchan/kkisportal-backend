@@ -79,3 +79,5 @@ class sponsorsSchoolarsQueries {
 
 
 }
+
+export const SponsorsSchoolarsQueries = new sponsorsSchoolarsQueries();

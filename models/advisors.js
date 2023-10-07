@@ -54,5 +54,3 @@ advisorsModel.init({
     modelName: 'advisors',
     timestamps: false
 });
-
-advisorsModel.belongsTo(gendersModel, {foreignKey: 'advisorGender', as: 'id'});

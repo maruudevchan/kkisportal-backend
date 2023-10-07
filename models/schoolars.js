@@ -41,7 +41,6 @@ import { schoolsModel } from './schools.js';
 import { locationsModel } from './locations.js';
 import { carreersModel } from './carreers.js';
 import { seasonsModel } from './seasons.js';
-import { schoolsModel } from './schools.js';
 
 export class schoolarsModel extends Model {}
 
@@ -192,5 +191,6 @@ schoolarsModel.init({
 }, {
     sequelize: DatabaseConfig,
     modelName: 'schoolars',
+    tableName: 'schoolars',
     timestamps: false
 });

@@ -1,7 +1,5 @@
 import { query } from "express"
 import { statusModel } from "../models/status.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
 
 class statusQueries {
 
@@ -54,3 +52,5 @@ class statusQueries {
 
 
 }
+
+export const StatusQueries = new statusQueries();

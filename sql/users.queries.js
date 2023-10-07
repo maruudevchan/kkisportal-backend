@@ -2,7 +2,7 @@ import { query } from "express";
 import { Op } from "sequelize";
 import { UserModel } from "../models/users.js";
 
-class UserQueries{
+class userQueries{
     
     async store(user){
         try{
@@ -48,4 +48,4 @@ class UserQueries{
 
 }
 
-export const userQueries = new UserQueries();
+export const UserQueries = new userQueries();

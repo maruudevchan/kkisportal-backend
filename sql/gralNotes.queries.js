@@ -1,6 +1,5 @@
 import { query } from "express"
 import { gralNotesModel } from "../models/gralNotes.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class gralNotesQueries{
@@ -53,4 +52,4 @@ class gralNotesQueries{
 
 }
 
-export const gralNotesQueries = new gralNotesQueries();
+export const GralNotesQueries = new gralNotesQueries();

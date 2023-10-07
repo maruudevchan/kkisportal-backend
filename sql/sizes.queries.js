@@ -54,4 +54,4 @@ class sizesQueries {
 
 }
 
-export const sizesQueries = new sizesQueries();
+export const SizesQueries = new sizesQueries();

@@ -1,5 +1,5 @@
 import { query } from "express"
-import { familyInfoQueries } from "../sql/familyInfo.queries.js"
+import { FamilyInfoQueries } from "../sql/familyInfo.queries.js"
 import { request, response } from 'express';
 
 
@@ -7,46 +7,46 @@ class familyInfoController {
 
     /**Para meter info de familia del schoolar */
 
-    async store(request, response) {
-        const familyInfo = request.body;
+    async store(req, res) {
+        const familyInfo = req.body;
 
-        const query = await familyInfoQueries.store(familyInfo);
+        const query = await FamilyInfoQueries.store(familyInfo);
 
         if (query.ok) {
-            return response.status(201).json(query.data);
+            return res.status(201).json(query.data);
         } else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
     }
 
     /**para buscar famil por ID */
-    async findFamilyInfoSt(request, response) {
-        const id = request.params.id;
+    async findFamilyInfoSt(req, res) {
+        const id = req.params.id;
 
-        const query = await familyInfoQueries.findFamilyInfoSt(id);
+        const query = await FamilyInfoQueries.findFamilyInfoSt(id);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
+            return res.status(200).json(query.data);
         } else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
 
     }
 
     /**Para actualizar un familo  */
-    async updateStfamilyInfo(request, response) {
+    async updateStfamilyInfo(req, res) {
 
-        const id = request.params.id;
-        const familyInfo = request.body;
+        const id = req.params.id;
+        const familyInfo = req.body;
 
-        const query = await familyInfoQueries.updateStfamilyInfo(id, familyInfo);
+        const query = await FamilyInfoQueries.updateStfamilyInfo(id, familyInfo);
 
         if (query.ok) {
-            return response.status(200).json(query.message);
+            return res.status(200).json(query.message);
         } else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
     }

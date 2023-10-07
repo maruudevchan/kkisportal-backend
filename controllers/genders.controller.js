@@ -1,50 +1,51 @@
 import { query } from "express"
-import { gendersQueries } from "../sql/genders.queries.js"
+import { GendersQueries } from "../sql/genders.queries.js"
 import { request, response } from 'express';
-class gendersQueries {
+
+class gendersController {
 
     /**Para meter géneros */
 
-    async store(request, response) {
-        const gender = request.body;
+    async store(req, res) {
+        const gender = req.body;
 
-        const query = await gendersQueries.store(gender);
+        const query = await GendersQueries.store(gender);
 
         if (query.ok) {
-            return response.status(201).json(query.data);
+            return res.status(201).json(query.data);
         }else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
         
 
     }
 
     /**para buscar gender */
-    async findGender(request, response) {
-        const id = request.params.id;
+    async findGender(req, res) {
+        const id = req.params.id;
 
-        const query = await gendersQueries.findGender(id);
+        const query = await GendersQueries.findGender(id);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
+            return res.status(200).json(query.data);
         }else{
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
     }
 
     /**Para actualizar la info de un género */
-    async updateGender(request, response) {
+    async updateGender(req, res) {
 
-        const id = request.params.id;
-        const gender = request.body;
+        const id = req.params.id;
+        const gender = req.body;
 
-        const query = gendersQueries.updateGender(id, gender)
+        const query = GendersQueries.updateGender(id, gender)
 
         if (query.ok) {
-            return response.status(200).json(query.message);
+            return res.status(200).json(query.message);
         }else{
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
     }
@@ -52,4 +53,4 @@ class gendersQueries {
 
 }
 
-export const gendersQueries = new gendersQueries();
+export const GendersController = new gendersController();

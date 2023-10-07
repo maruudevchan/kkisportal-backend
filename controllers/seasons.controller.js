@@ -1,5 +1,4 @@
-import { query } from "express"
-import { seasonQueries } from "../sql/seasons.queries.js"
+import { SeasonsQueries } from "../sql/seasons.queries.js"
 import { request, response } from 'express';
 
 class seasonsController {
@@ -7,7 +6,7 @@ class seasonsController {
     /**para buscar season por ID */
     async findSeason(request, response) {
         const id = request.id;
-        const query = await seasonsQueries.findSeason(id);
+        const query = await SeasonsQueries.findSeason(id);
 
         if (query.ok) {
             response.status(200).json(query.data);

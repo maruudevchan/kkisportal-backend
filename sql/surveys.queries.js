@@ -1,6 +1,5 @@
 import { query } from "express"
 import { surveys, surveysModel } from "../models/surveys.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class surveyssQueries {
@@ -11,7 +10,6 @@ class surveyssQueries {
         try {
             const query = await surveysModel.create(surveys);
         } catch (error) {
-            console.log('error: ', error);
             return error(`Error al crear la encuesta: ${error.message}`);
         } finally {
             return { ok: true, data: query };
@@ -54,5 +52,6 @@ class surveyssQueries {
 
     }
 
-
 }
+
+export const SurveysQueries = new surveyssQueries();

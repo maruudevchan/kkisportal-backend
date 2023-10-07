@@ -55,4 +55,4 @@ class carreersQueries {
 
 }
 
-export const carreersQueries = new carreersQueries();
+export const CarreersQueries = new carreersQueries();

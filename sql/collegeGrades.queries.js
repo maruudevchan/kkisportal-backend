@@ -1,6 +1,5 @@
 import { query } from "express"
 import { collegeGradesModel } from "../models/collegeGrades.js"
-import { http } from "http"
 import { Op as Op, Sequelize } from 'sequelize'
 
 class collegeGradesQueries {
@@ -138,4 +137,4 @@ class collegeGradesQueries {
 
 }
 
-export const highSchoolGradesQueries = new highSchoolGradesQueries();
+export const CollegeGradesQueries = new collegeGradesQueries();

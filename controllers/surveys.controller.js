@@ -1,5 +1,4 @@
-import { query } from "express"
-import { surveysQueries } from "../sql/surveys.queries.js"
+import { SurveysQueries } from "../sql/surveys.queries.js"
 import { request, response } from 'express';
 
 class surveysController {
@@ -8,7 +7,7 @@ class surveysController {
 
     async store(request, response) {
         const survey = request.body;
-        const query = await surveysQueries.store(survey);
+        const query = await SurveysQueries.store(survey);
 
         if (query.ok) {
             response.status(201).json(query.data);
@@ -21,7 +20,7 @@ class surveysController {
     /**para buscar encuesta por ID */
     async findSurveySchoolar(request, response) {
         const id = request.id;
-        const query = await surveysQueries.findSurveySchoolar(id);
+        const query = await SurveysQueries.findSurveySchoolar(id);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -34,7 +33,7 @@ class surveysController {
      /**para buscar encuesta por ID */
      async updateSurveSchoolar(request, response) {
         const id = request.id;
-        const query = await surveysQueries.updateSurveSchoolar(id);
+        const query = await SurveysQueries.updateSurveSchoolar(id);
 
         if (query.ok) {
             response.status(200).json(query.data);

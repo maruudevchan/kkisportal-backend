@@ -1,4 +1,3 @@
-import { query } from "express"
 import { personalStsQueries } from "../sql/personalSts.queries.js"
 import { request, response } from "express"
 
@@ -47,4 +46,4 @@ class personalStsController {
 
 }
 
-export const personalStsController = new personalStsController();
+export const PersonalStsController = new personalStsController();

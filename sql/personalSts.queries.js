@@ -1,6 +1,5 @@
 import { query } from "express"
 import { personalStsModel } from "../models/personalSts.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class personalStsQueries {
@@ -53,4 +52,4 @@ class personalStsQueries {
     }
 }
 
-export const personalStsQueries = new personalStsQueries();
+export const PersonalStsQueries = new personalStsQueries();

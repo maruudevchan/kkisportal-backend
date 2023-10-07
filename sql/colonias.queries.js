@@ -55,4 +55,4 @@ class coloniasQueries {
 
 }
 
-export const coloniasQueries = new coloniasQueries();
+export const ColoniasQueries = new coloniasQueries();

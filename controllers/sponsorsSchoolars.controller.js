@@ -1,5 +1,4 @@
-import { query } from "express"
-import { sponsorsSchoolarsQueries } from "../sql/sponsorsSchoolars.queries.js"
+import { SponsorsSchoolarsQueries } from "../sql/sponsorsSchoolars.queries.js"
 import { request, response } from 'express';
 
 class sponsorsSchoolarsController {
@@ -8,7 +7,7 @@ class sponsorsSchoolarsController {
 
     async store(request, response) {
         const schoolarSponsor = request.body;
-        const query = await sponsorsSchoolarsQueries.store(schoolarSponsor);
+        const query = await SponsorsSchoolarsQueries.store(schoolarSponsor);
 
         if (query.ok) {
             return response.status(200).json(query);
@@ -21,7 +20,7 @@ class sponsorsSchoolarsController {
     /**para buscar quién patrocina al becado */
     async findSponsor(request, response) {
         const idst = request.idst;
-        const query = await sponsorsSchoolarsQueries.findSponsor(idst);
+        const query = await SponsorsSchoolarsQueries.findSponsor(idst);
 
         if (query.ok) {
             return response.status(200).json(query);
@@ -35,7 +34,7 @@ class sponsorsSchoolarsController {
 
     async findSchoolars(request, response) {
         const idsp = request.idsp;
-        const query = await sponsorsSchoolarsQueries.findSchoolars(idsp);
+        const query = await SponsorsSchoolarsQueries.findSchoolars(idsp);
 
         if (query.ok) {
             return response.status(200).json(query);
@@ -51,7 +50,7 @@ class sponsorsSchoolarsController {
     async updateSponsor(request, response) {
         const idst = request.idst;
         const sponsor = request.sponsor;
-        const query = await sponsorsSchoolarsQueries.updateSponsor(idst, idsp);
+        const query = await SponsorsSchoolarsQueries.updateSponsor(idst, idsp);
 
         if (query.ok) {
             return response.status(200).json(query);

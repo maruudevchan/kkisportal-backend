@@ -1,5 +1,4 @@
-import { query } from "express"
-import { statusQueries } from "../sql/status.queries.js"
+import { StatusQueries } from "../sql/status.queries.js"
 import { request, response } from 'express';
 
 class statusController {
@@ -8,7 +7,7 @@ class statusController {
 
     async store(request, response) {
         const status = request.body;
-        const query = await statusQueries.store(status);
+        const query = await StatusQueries.store(status);
 
         if (query.ok) {
             response.status(201).json(query.data);
@@ -21,7 +20,7 @@ class statusController {
     /**para buscar un status por ID */
     async findStatus(request, response) {
         const id = request.id;
-        const query = await statusQueries.findStatus(id);
+        const query = await StatusQueries.findStatus(id);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -35,7 +34,7 @@ class statusController {
     async updateAdvisor(request, response) {
         const id = request.id;
         const status = request.body;
-        const query = await statusQueries.updateStatus(id, status);
+        const query = await StatusQueries.updateStatus(id, status);
 
         if (query.ok) {
             response.status(200).json(query.message);

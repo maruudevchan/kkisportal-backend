@@ -1,47 +1,46 @@
-import { query } from "express"
-import { gralNotesQueries } from "../sql/gralNotes.queries.js"
+import { GralNotesQueries } from "../sql/gralNotes.queries.js"
 import { request, response } from 'express'
 
 class gralNotesController{
     
-    async store(request,response) {
-        const gralNotes = request.body;
+    async store(req,res) {
+        const gralNotes = req.body;
 
-        const query = await gralNotesQueries.store(gralNotes);
+        const query = await GralNotesQueries.store(gralNotes);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
+            return res.status(200).json(query.data);
         }else{
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
         
     }
 
-    async findgralNotes(request,response) {
-        const idst = request.idst;
+    async findgralNotes(req,res) {
+        const idst = req.idst;
 
-        const query = await gralNotesQueries.findgralNotes(idst);
+        const query = await GralNotesQueries.findgralNotes(idst);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
+            return res.status(200).json(query.data);
         }else{
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
 
     }
 
-    async updategralNotes(request,response) {
-        const id = request.id;
-        const gralNotes = request.body;
+    async updategralNotes(req,res) {
+        const id = req.id;
+        const gralNotes = req.body;
 
-        const query = await gralNotesQueries.updategralNotes(id,gralNotes);
+        const query = await GralNotesQueries.updategralNotes(id,gralNotes);
 
         if (query.ok) {
-            return response.status(200).json(query.message);
+            return res.status(200).json(query.message);
         }else{
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
     }
 
@@ -49,4 +48,4 @@ class gralNotesController{
 
 }
 
-export const gralNotesQueries = new gralNotes();
+export const GralNotesQueries = new gralNotes();

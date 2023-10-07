@@ -1,52 +1,52 @@
-import { query } from "express"
-import { schoolarsQueries } from "../sql/schoolars.queries.js"
+import { SchoolarsQueries } from "../sql/schoolars.queries.js"
 import { request, response } from "express"
 
 class schoolarsController {
 
     /**Para meter becados */
 
-    async store(request, response) {
-        const student = request.body;
-        const query = await schoolarsQueries.store(student);
+    async store(req, res) {
+        const student = req.body;
+        const query = await SchoolarsQueries.store(student);
 
         if (query.ok) {
-            response.status(201).json(query.data);
+            res.status(201).json(query.data);
         } else {
-            response.status(400).json({ error: query.error });
+            console.log(student);
+            res.status(400).json({ error: query.error });
         }
         
     }
 
     /**para buscar schoolar por ID */
-    async findSchoolar(request, response) {
-        const id = request.id;
-        const query = await schoolarsQueries.findSchoolar(id);
+    async findSchoolar(req, res) {
+        const id = req.id;
+        const query = await SchoolarsQueries.findSchoolar(id);
 
         if (query.ok) {
-            response.status(200).json(query.data);
+            res.status(200).json(query.data);
         } else {
-            response.status(400).json({ error: query.error });
+            res.status(400).json({ error: query.error });
         }
         
 
     }
 
     /**Para actualizar un estudiante */
-    async updateSchoolar(request, response) {
-        const id = request.id;
+    async updateSchoolar(req, res) {
+        const id = req.id;
         const schoolar = request.body;
 
-        const query = await schoolarsQueries.updateSchoolar(id, schoolar);
+        const query = await SchoolarsQueries.updateSchoolar(id, schoolar);
 
         if (query.ok) {
-            response.status(200).json(query.data);
+            res.status(200).json(query.data);
         } else {
-            response.status(400).json({ error: query.error });
+            res.status(400).json({ error: query.error });
         }
 
     }
 
 }
 
-export const schoolarsController = new schoolarsController();
+export const SchoolarsController = new schoolarsController();

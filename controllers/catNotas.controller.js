@@ -1,5 +1,5 @@
 import { query } from "express"
-import { catNotasQueries } from "../sql/catNotas.queries.js"
+import { CatNotasQueries } from "../sql/catNotas.queries.js"
 import { request, response } from 'express';
 import { Payload } from '../helpers/payload.js';
 
@@ -7,42 +7,42 @@ class catNotasController {
 
     /**Para meter notas */
 
-    async addNota(request, response) {
-        const nota = request.body;
+    async addNota(req, res) {
+        const nota = req.body;
 
-        const query = await catNotasQueries.store(nota);
+        const query = await CatNotasQueries.store(nota);
 
         if (query.ok) {
-            return response.status(200).json({ ok: true, data: query.data });
+            return res.status(200).json({ ok: true, data: query.data });
         } else {
-            return response.status(500).json({ ok: false, error: query.error });
+            return res.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
     /**para buscar notas por ID */
-    async findNotas(request, response) {
-        const idst = request.id;
-        const query = await catNotasQueries.findNotas(idst);
+    async findNotas(req, res) {
+        const idst = req.id;
+        const query = await CatNotasQueries.findNotas(idst);
 
         if (query.ok) {
-            return response.status(200).json({ ok: true, data: query.data });
+            return res.status(200).json({ ok: true, data: query.data });
         } else {
-            return response.status(500).json({ ok: false, error: query.error });
+            return res.status(500).json({ ok: false, error: query.error });
         }
 
     }
 
     /**Para actualizar una nota */
-    async updateNotas(request, response) {
-        const idst = request.body.idst;
-        const catNotas = request.body;
-        const query = await catNotasQueries.updateNotas(idst, catNotas);
+    async updateNotas(req, res) {
+        const idst = req.body.idst;
+        const catNotas = req.body;
+        const query = await CatNotasQueries.updateNotas(idst, catNotas);
 
         if (query.ok) {
-            return response.status(200).json({ ok: true, data: query.data });
+            return res.status(200).json({ ok: true, data: query.data });
         } else {
-            return response.status(500).json({ ok: false, error: query.error });
+            return res.status(500).json({ ok: false, error: query.error });
         }
 
     }

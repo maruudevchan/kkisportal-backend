@@ -1,5 +1,4 @@
-import { query } from "express"
-import { schoolsQueries } from "../sql/schools.queries.js"
+import { SchoolsQueries } from "../sql/schools.queries.js"
 import { request, response } from 'express';
 
 
@@ -9,7 +8,7 @@ class schoolsController {
 
     async store(request, response) {
         const school = request.body;
-        const query = await schoolsQueries.store(school);
+        const query = await SchoolsQueries.store(school);
 
         if (query.ok) {
             response.status(201).json(query.data);
@@ -22,7 +21,7 @@ class schoolsController {
     /**para buscar escuela por ID */
     async findSchool(request, response) {
         const id = request.id;
-        const query = await schoolsQueries.findSchool(id);
+        const query = await SchoolsQueries.findSchool(id);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -37,7 +36,7 @@ class schoolsController {
         const id = request.id;
         const school = request.body;
 
-        const query = await schoolsQueries.updateSchool(id, school);
+        const query = await SchoolsQueries.updateSchool(id, school);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -49,3 +48,5 @@ class schoolsController {
 
 
 }
+
+export const SchoolsController = new schoolsController();

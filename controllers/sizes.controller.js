@@ -1,5 +1,4 @@
-import { query } from "express"
-import { sizesModel } from "../models/sizes.js"
+import { SizesQueries } from "../sql/sizes.queries.js"
 import { request, response } from "express";
 
 class sizesController {
@@ -8,7 +7,7 @@ class sizesController {
 
     async store(request, response) {
         const size = request.body;
-        const query = await sizesQueries.store(size);
+        const query = await SizesQueries.store(size);
 
         if (query.ok) {
             response.status(201).json(query.data);
@@ -21,7 +20,7 @@ class sizesController {
     /**para buscar size por ID */
     async findSize(request, response) {
         const id = request.id;
-        const query = await sizesQueries.findSize(id);
+        const query = await SizesQueries.findSize(id);
 
         if (query.ok) {
             response.status(200).json(query.data);
@@ -34,7 +33,7 @@ class sizesController {
     async updateSize(request, response) {
         const id = request.id;
         const size = request.body;
-        const query = await sizesQueries.updateSize(id, size);
+        const query = await SizesQueries.updateSize(id, size);
 
         if (query.ok) {
             response.status(200).json(query.message);

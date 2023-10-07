@@ -1,9 +1,8 @@
 import { query } from "express"
 import {houseSituationsModel} from "../models/houseSituations.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
-class HouseSituationsQueries {
+class houseSituationsQueries {
 
     /**Para meter situaciones */
 
@@ -63,4 +62,4 @@ class HouseSituationsQueries {
 
 }
 
-export const houseSituationsQueries = new HouseSituationsQueries();
+export const HouseSituationsQueries = new houseSituationsQueries();

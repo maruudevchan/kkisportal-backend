@@ -55,4 +55,4 @@ class locationsQueries{
 
 }
 
-export const locationsQueries = new locationsQueries();
+export const LocationsQueries = new locationsQueries();

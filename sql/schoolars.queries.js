@@ -1,6 +1,5 @@
 import { query } from "express"
 import { schoolarsModel } from "../models/schoolars.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class schoolarsQueries {
@@ -55,4 +54,4 @@ class schoolarsQueries {
 
 }
 
-export const schoolarsQueries = new schoolarsQueries();
+export const SchoolarsQueries = new schoolarsQueries();

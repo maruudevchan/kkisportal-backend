@@ -74,4 +74,4 @@ class gendersQueries {
 
 }
 
-export const gendersQueries = new gendersQueries();
+export const GendersQueries = new gendersQueries();

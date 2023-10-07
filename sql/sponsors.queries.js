@@ -52,4 +52,4 @@ class sponsorsQueries {
     }
 }
 
-export const sponsorsQueries = new sponsorsQueries();
+export const SponsorsQueries = new sponsorsQueries();

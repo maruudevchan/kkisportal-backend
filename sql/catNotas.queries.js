@@ -1,5 +1,5 @@
 import { query } from "express"
-import { catNotasModel } from "../models/catNotas.js"
+import { CatNotasModel } from "../models/catNotas.js"
 import { http } from "http"
 import { Op as Op } from 'sequelize'
 
@@ -7,7 +7,7 @@ class catNotasQueries {
 
     async store(catNotas) {
         try {
-            const query = await catNotasModel.create(catNotas);
+            const query = await CatNotasModel.create(catNotas);
         } catch (error) {
             console.log('error: ', error);
             return error(`Error al crear la nota: ${error.message}`);
@@ -18,7 +18,7 @@ class catNotasQueries {
 
     async findcatNotas(idst) {
         try {
-            const query = await catNotasModel.findOne(
+            const query = await CatNotasModel.findOne(
                 {
                     where:
                         { idst: idst }
@@ -36,7 +36,7 @@ class catNotasQueries {
     async updateNotas(idst, catNotas) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await catNotasModel.update(catNotas)({
+            const [updatedRows] = await CatNotasModel.update(catNotas)({
                 where: { idst: idst },
             });
         } catch (error) {
@@ -49,4 +49,4 @@ class catNotasQueries {
     }   
 }
 
-export const catNotasQueries = new catNotasQueries();
+export const CatNotasQueries = new catNotasQueries();

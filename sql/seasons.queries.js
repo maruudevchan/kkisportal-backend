@@ -1,6 +1,5 @@
 import { query } from "express"
 import { seasonsModel } from "../models/seasons.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class seasonsQueries {
@@ -26,4 +25,4 @@ class seasonsQueries {
 
 }
 
-export const seasonsQueries = new seasonsQueries();
+export const SeasonsQueries = new seasonsQueries();

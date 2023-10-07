@@ -1,5 +1,5 @@
 import { query } from "express"
-import { languagesQueries } from "../sql/languages.queries.js"
+import { LanguagesQueries } from "../sql/languages.queries.js"
 import { request, response } from 'express';
 
 
@@ -7,40 +7,40 @@ class languagesController {
 
     /**Para meter languages */
 
-    async store(request, response) {
-        const language = request.body;
-        const query = await languagesQueries.store(language);
+    async store(req, res) {
+        const language = req.body;
+        const query = await LanguagesQueries.store(language);
 
         if (query.ok) {
-            return response.status(200).json(query);
+            return res.status(200).json(query);
         } else {
-            return response.status(400).json(query);
+            return res.status(400).json(query);
         }
         
     }
 
     /**para buscar language por ID */
-    async findlanguage(request, response) {
-        const id = request.id;
-        const query = await languagesQueries.findlanguage(id);
+    async findlanguage(req, res) {
+        const id = req.id;
+        const query = await LanguagesQueries.findlanguage(id);
 
         if (query.ok) {
-            return response.status(200).json(query);
+            return res.status(200).json(query);
         } else {
-            return response.status(400).json(query);
+            return res.status(400).json(query);
         }
 
     }
 
     /**Para actualizar un language */
-    async updatelanguage(request, response) {
-        const language = request.body;
-        const query = await languagesQueries.updatelanguage(language);
+    async updatelanguage(req, res) {
+        const language = req.body;
+        const query = await LanguagesQueries.updatelanguage(language);
 
         if (query.ok) {
-            return response.status(200).json(query);
+            return res.status(200).json(query);
         } else {
-            return response.status(400).json(query);
+            return res.status(400).json(query);
         }
 
     }

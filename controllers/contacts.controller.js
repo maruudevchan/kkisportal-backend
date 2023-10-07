@@ -1,56 +1,52 @@
-import { query } from "express"
-import { contactsQueries } from "../sql/contacts.queries.js"
-import { http } from "http"
-import { Op as Op } from 'sequelize'
+import { ContactsQueries } from "../sql/contacts.queries.js"
 import { request, response } from 'express';
-import { Payload } from '../helpers/payload.js';
 
 
 class contactsController {
 
     /**Para meter contactos */
 
-    async store(request, response) {
-        const contact = request.body;
+    async store(req, res) {
+        const contact = req.body;
 
-        const query = await contactsQueries.store(contact);
+        const query = await ContactsQueries.store(contact);
 
         if (query.ok) {
-            return response.status(201).json(query.data);
+            return res.status(201).json(query.data);
         } else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
         
     }
 
     /**para buscar contact por ID */
-    async findStContacts(request, response) {
-        const id = request.params.id;
+    async findStContacts(req, res) {
+        const id = req.params.id;
 
-        const query = await contactsQueries.findContacts(id);
+        const query = await ContactsQueries.findContacts(id);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
+            return res.status(200).json(query.data);
         } else {
-            return response.status(400).json(query.error);
+            return res.status(400).json(query.error);
         }
 
 
     }
 
     /**Para actualizar un contacto  */
-    async updateStContact(request, response) {
+    async updateStContact(req, res) {
            
-            const id = request.params.id;
-            const contact = request.body;
+            const id = req.params.id;
+            const contact = req.body;
     
-            const query = await contactsQueries.updateStContact(id, contact);
+            const query = await ContactsQueries.updateStContact(id, contact);
     
             if (query.ok) {
-                return response.status(200).json(query.message);
+                return res.status(200).json(query.message);
             } else {
-                return response.status(400).json(query.error);
+                return res.status(400).json(query.error);
             }
 
     }

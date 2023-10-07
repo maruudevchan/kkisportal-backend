@@ -138,4 +138,4 @@ class highSchoolGradesQueries {
 
 }
 
-export const highSchoolGradesQueries = new highSchoolGradesQueries();
+export const HighSchoolGradesQueries = new highSchoolGradesQueries();

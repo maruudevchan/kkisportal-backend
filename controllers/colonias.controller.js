@@ -1,55 +1,51 @@
-import { query } from "express"
-import {coloniasQueries } from "../sql/colonias.queries.js"
-import { http } from "http"
-
+import { ColoniasQueries } from "../sql/colonias.queries.js"
 import { request, response } from 'express';
-import { Payload } from '../helpers/payload.js';
 
 class coloniasController {
 
     /**Para meter colonias */
 
-    async store(request, response) {
-        const colonia = request.body;
+    async store(req, res) {
+        const colonia = req.body;
 
-        const query = await coloniasQueries.store(colonia);
+        const query = await ColoniasQueries.store(colonia);
 
         if (query.ok) {
-            return response.status(201).json(query.data);
-        }else{
-            return response.status(400).json(query.error);
+            return res.status(201).json(query.data);
+        } else {
+            return res.status(400).json(query.error);
         }
-        
+
     }
 
     /**para buscar colonia por ID */
-    async findColonia(request, response) {
-        const id = request.params.id;
+    async findColonia(req, res) {
+        const id = req.params.id;
 
-        const query = await coloniasQueries.findColonia(id);
+        const query = await ColoniasQueries.findColonia(id);
 
         if (query.ok) {
-            return response.status(200).json(query.data);
-        }else{
-            return response.status(400).json(query.error);
+            return res.status(200).json(query.data);
+        } else {
+            return res.status(400).json(query.error);
         }
 
     }
 
     /**Para actualizar un colonia */
-    async updateColonia(request, response) {
+    async updateColonia(req, res) {
 
-        const id = request.params.id;
-        const colonia = request.body;
+        const id = req.params.id;
+        const colonia = req.body;
 
-        const query = await coloniasQueries.updateColonia(id, colonia);
+        const query = await ColoniasQueries.updateColonia(id, colonia);
 
         if (query.ok) {
-            return response.status(200).json(query.message);
-        }else{
-            return response.status(400).json(query.error);
+            return res.status(200).json(query.message);
+        } else {
+            return res.status(400).json(query.error);
         }
-       
+
     }
 
 
