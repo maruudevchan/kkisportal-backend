@@ -1,14 +1,14 @@
 //global imports
-import bodyParser from 'body-parser';
 import express from 'express';
+import bodyParser from 'body-parser';
 import path from 'path';
 
 //controllers
 import { SchoolarsController } from '../controllers/schoolars.controller.js';
 import { UsersController } from '../controllers/users.controller.js';
 import { ApiAssistantController } from '../controllers/apiAssistant.controller.js';
-
-
+import { SponsorsController } from '../controllers/sponsors.controller.js';
+import { GralNotesController } from '../controllers/gralNotes.controller.js';
 
 //middleware
 // import { validateToken } from '../middlewares/accessToken.middleware.js';
@@ -26,7 +26,15 @@ export class Routes {
 
         app.route('/data').get(ApiAssistantController.getData);
 
-        app.route('/newStudent').post(bodyParser.json(), SchoolarsController.store);
+        //para schoolars
+        app.route('/newSchoolar').post(bodyParser.json(), SchoolarsController.store);
+        app.route('/pendings').get(GralNotesController.findPendings);
+        
+        //para advisors
+        // app.route('/newAdvisor').post(bodyParser.json(), AdvisorsController.store);
+
+        //para sponsors
+        app.route('/newSponsor').post(bodyParser.json(), SponsorsController.store);
 
 
         //para usuarios

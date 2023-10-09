@@ -47,6 +47,7 @@ class schoolarsController {
 
     }
 
+
 }
 
 export const SchoolarsController = new schoolarsController();

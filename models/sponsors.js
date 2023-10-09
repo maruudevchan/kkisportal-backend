@@ -45,5 +45,6 @@ sponsorsModel.init({
     
 }, {
     sequelize: DatabaseConfig,
-    tableName: 'sponsors'
+    tableName: 'sponsors',
+    timestamps: false
 });

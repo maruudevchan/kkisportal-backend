@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 import { DatabaseConfig } from '../config/database.js';
 import { schoolarsModel } from './schoolars.js';
-import { catNotasModel } from './catNotas.js';
-import { usersModel } from './users.js';
+import { CatNotasModel } from './catNotas.js';
+import { UsersModel } from './users.js';
 
 export class GralNotesModel extends Model {}
 
@@ -21,7 +21,7 @@ GralNotesModel.init({
     categoria: {
         type: DataTypes.INTEGER,
         references: {
-            model: catNotasModel,
+            model: CatNotasModel,
             key: 'id'
         }
     },
@@ -31,7 +31,7 @@ GralNotesModel.init({
     whoDid: {
         type: DataTypes.INTEGER,
         references: {
-            model: usersModel,
+            model: UsersModel,
             key: 'id'
         }
     },
