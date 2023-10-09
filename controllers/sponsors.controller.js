@@ -44,6 +44,7 @@ class sponsorsController {
         }
 
     }
+
 }
 
 export const SponsorsController = new sponsorsController();

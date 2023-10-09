@@ -50,6 +50,13 @@ class sponsorsQueries {
         }
 
     }
+
+    async countSponsors(res){
+        const sponsors = await sponsorsModel.count();
+        return sponsors
+
+    }
+
 }
 
 export const SponsorsQueries = new sponsorsQueries();

@@ -1,9 +1,12 @@
 //global imports
 import bodyParser from 'body-parser';
 import express from 'express';
+import path from 'path';
+
 //controllers
-import {SchoolarsController} from '../controllers/schoolars.controller.js';
-import {UsersController} from '../controllers/users.controller.js';
+import { SchoolarsController } from '../controllers/schoolars.controller.js';
+import { UsersController } from '../controllers/users.controller.js';
+import { ApiAssistantController } from '../controllers/apiAssistant.controller.js';
 
 
 
@@ -11,11 +14,17 @@ import {UsersController} from '../controllers/users.controller.js';
 // import { validateToken } from '../middlewares/accessToken.middleware.js';
 
 export class Routes {
+
+
     initRoutes(app = express.application) {
+        const __dirname = path.resolve();
         app.get('/', (req, res) => {
-            const filePath = path.join(__dirname, 'restricted.html');
-            res.status(404).sendFile(filePath);
+            console.log('path: '+__dirname+'\\routes\\restricted.html');
+            res.status(404).sendFile(path.join(__dirname, '/routes/restricted.html'));
         });
+
+
+        app.route('/data').get(ApiAssistantController.getData);
 
         app.route('/newStudent').post(bodyParser.json(), SchoolarsController.store);
 

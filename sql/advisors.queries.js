@@ -1,6 +1,5 @@
 import { query } from "express"
 import { advisorsModel } from "../models/advisors.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class advisorsQueries {
@@ -50,6 +49,11 @@ class advisorsQueries {
             return { ok: true, message: 'Asesor actualizado correctamente' };
         }
 
+    }
+
+    async countAdvisors(res){
+        const advisors = await advisorsModel.count();
+        return advisors
     }
 
 

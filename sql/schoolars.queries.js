@@ -51,6 +51,25 @@ class schoolarsQueries {
 
     }
 
+    async countSchoolars(res) {
+        const highschool = await schoolarsModel.count({
+            where: {
+                level: 0
+            }
+        });
+
+        const college = await schoolarsModel.count({
+            where: {
+                level: 1
+            }
+        });
+
+        const total = highschool + college;
+       return ({highschool:highschool, college:college, total:total})
+
+    }
+
+
 
 }
 
