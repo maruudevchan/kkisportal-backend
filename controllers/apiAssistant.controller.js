@@ -14,10 +14,6 @@ class apiAssistantController {
         const highschool = await SchoolarsQueries.countSchoolars();
        const pendings = await SchoolarsQueries.listPendings();
 
-
-        console.log('api assistant: '+pendings);
-
-
         res.json({ sponsors: sponsors, advisors: advisors, schoolars: highschool, pendings: pendings });
     }
 }

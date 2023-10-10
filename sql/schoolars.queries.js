@@ -78,6 +78,7 @@ class schoolarsQueries {
             console.log('query schoolars list pendings: ' + res.data);
     
             const query = await schoolarsModel.findAll({
+                attributes: ['id', 'name', 'lastname', 'level', 'school'],
                 where: {
                     id: {
                         [Op.in]: res.data
