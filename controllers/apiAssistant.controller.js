@@ -3,7 +3,7 @@ import { SchoolarsQueries } from "../sql/schoolars.queries.js";
 import { AdvisorsQueries } from "../sql/advisors.queries.js";
 import { GralNotesController } from "./gralNotes.controller.js";
 
-import {request, response} from 'express';
+import { request, response } from 'express';
 
 
 class apiAssistantController {
@@ -12,10 +12,13 @@ class apiAssistantController {
         const sponsors = await SponsorsQueries.countSponsors();
         const advisors = await AdvisorsQueries.countAdvisors();
         const highschool = await SchoolarsQueries.countSchoolars();
+       const pendings = await SchoolarsQueries.listPendings();
 
-        const pendings = await GralNotesController.dataPendings();
 
-        res.json({ sponsors: sponsors, advisors: advisors, highschool: highschool, pendings: pendings });
+        console.log('api assistant: '+pendings);
+
+
+        res.json({ sponsors: sponsors, advisors: advisors, schoolars: highschool, pendings: pendings });
     }
 }
 

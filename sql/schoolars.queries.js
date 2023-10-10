@@ -1,6 +1,7 @@
 import { query } from "express"
 import { schoolarsModel } from "../models/schoolars.js"
 import { Op as Op } from 'sequelize'
+import { GralNotesQueries } from "./gralNotes.queries.js";
 
 class schoolarsQueries {
 
@@ -69,6 +70,30 @@ class schoolarsQueries {
 
     }
 
+    //para traer la lista de alumnos con pendientes
+
+    async listPendings() {
+        try {
+            const res = await GralNotesQueries.findPendings();
+            console.log('query schoolars list pendings: ' + res.data);
+    
+            const query = await schoolarsModel.findAll({
+                where: {
+                    id: {
+                        [Op.in]: res.data
+                    }
+                }
+            });
+    
+            console.log('después del query en schoolars: ' + query);
+    
+            return query;
+        } catch (error) {
+            console.error('Error en listPendings:', error);
+            throw error;
+        }
+    }
+    
 
 
 }

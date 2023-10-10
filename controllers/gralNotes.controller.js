@@ -1,4 +1,5 @@
 import { GralNotesQueries } from "../sql/gralNotes.queries.js";
+import { request, response } from 'express';
 
 class gralNotesController {
     
@@ -39,25 +40,28 @@ class gralNotesController {
         }
     }
 
-    async findPendings(req, res) { // Agregar req como parámetro
+    async findPendings(req, res) {
         const query = await GralNotesQueries.findPendings();
         if (query.ok) {
-            // console.log(query.data);
+            console.log(query.data);
             res.json(query.data);
         } else {
             res.status(404).json('no pendings');
         }
     }
 
-    async dataPendings(req, res) { // Agregar req como parámetro
-        const query = await GralNotesQueries.findPendings();
+    //para traer la lista de alumnos
+    async findList(req, res){
+        const query = await GralNotesQueries.findList();
         if (query.ok) {
-            // console.log(query.data);
-            return query.data;
+            console.log(query.data);
+            res.json(query.data);
         } else {
-            return 'no pendings';
+            res.status(404).json('no list');
         }
     }
+
+    
 }
 
 export const GralNotesController = new gralNotesController();
