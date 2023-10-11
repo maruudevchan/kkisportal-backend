@@ -2,6 +2,7 @@ import { query } from "express"
 import { schoolarsModel } from "../models/schoolars.js"
 import { Op as Op } from 'sequelize'
 import { GralNotesQueries } from "./gralNotes.queries.js";
+import { schoolsModel } from "../models/schools.js";
 
 class schoolarsQueries {
 
@@ -66,7 +67,7 @@ class schoolarsQueries {
         });
 
         const total = highschool + college;
-       return ({highschool:highschool, college:college, total:total})
+        return ({ highschool: highschool, college: college, total: total })
 
     }
 
@@ -75,8 +76,7 @@ class schoolarsQueries {
     async listPendings() {
         try {
             const res = await GralNotesQueries.findPendings();
-            console.log('query schoolars list pendings: ' + res.data);
-    
+            // Busco aquí los alumnos con pendientes por medio de ids de res
             const query = await schoolarsModel.findAll({
                 attributes: ['id', 'name', 'lastname', 'level', 'school'],
                 where: {
@@ -86,15 +86,29 @@ class schoolarsQueries {
                 }
             });
     
-            console.log('después del query en schoolars: ' + query);
-    
-            return query;
+            const results = await Promise.all(query.map(async (student) => {
+                const schoolId = student.dataValues.school;
+                const school = await schoolsModel.findByPk(schoolId);
+                const schoolName = school ? school.dataValues.school : 'Escuela Desconocida';
+                
+                // Retorna el objeto con los datos del estudiante y el nombre de la escuela
+                return {
+                    id: student.dataValues.id,
+                    name: student.dataValues.name,
+                    lastname: student.dataValues.lastname,
+                    level: student.dataValues.level,
+                    school: schoolName
+                };
+            }
+            ));
+            
+            return results;
         } catch (error) {
-            console.error('Error en listPendings:', error);
             throw error;
         }
     }
     
+
 
 
 }

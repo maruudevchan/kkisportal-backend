@@ -33,5 +33,6 @@ schoolsModel.init({
     }
 }, {
     sequelize: DatabaseConfig,
-    tableName: 'schools'
+    tableName: 'schools',
+    timestamps: false
 });

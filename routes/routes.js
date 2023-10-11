@@ -1,5 +1,6 @@
 //global imports
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 
@@ -18,13 +19,18 @@ export class Routes {
 
     initRoutes(app = express.application) {
         const __dirname = path.resolve();
+        
         app.get('/', (req, res) => {
             console.log('path: '+__dirname+'\\routes\\restricted.html');
             res.status(404).sendFile(path.join(__dirname, '/routes/restricted.html'));
         });
 
+        app.use(cors());
 
+        //dashboard routes
         app.route('/data').get(ApiAssistantController.getData);
+        app.route('/getSchoolars').get(ApiAssistantController.getSchoolars);
+        app.route('/pendings').get(ApiAssistantController.getPendings);
 
         //para schoolars
         app.route('/newSchoolar').post(bodyParser.json(), SchoolarsController.store);

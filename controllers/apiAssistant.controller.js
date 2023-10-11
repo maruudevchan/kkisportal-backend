@@ -8,13 +8,24 @@ import { request, response } from 'express';
 
 class apiAssistantController {
 
-    async getData(req, res) {
+    async getData(req, response) {
         const sponsors = await SponsorsQueries.countSponsors();
         const advisors = await AdvisorsQueries.countAdvisors();
-        const highschool = await SchoolarsQueries.countSchoolars();
-       const pendings = await SchoolarsQueries.listPendings();
 
-        res.json({ sponsors: sponsors, advisors: advisors, schoolars: highschool, pendings: pendings });
+        return response.json({
+            sponsors,
+            advisors
+        });
+    }
+    
+    async getSchoolars(req,res){
+        const highschool = await SchoolarsQueries.countSchoolars();
+        return res.json(highschool);
+    }
+
+    async getPendings(req,res){
+        const pendings = await SchoolarsQueries.listPendings();
+        return res.json(pendings);
     }
 }
 

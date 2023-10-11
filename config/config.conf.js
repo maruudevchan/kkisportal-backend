@@ -35,7 +35,12 @@ class App {
 
         this.app.use(express.json());
         
-        this.app.use(cors({origin: '*' }));
+        this.app.use(cors({
+            origin: 'http://localhost:4200', // Reemplaza con el dominio de tu aplicación Angular
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+            preflightContinue: false,
+            optionsSuccessStatus: 204,
+         }));
     }
 
     async initDatabase(){
