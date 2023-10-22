@@ -18,6 +18,13 @@ class schoolarsController {
         
     }
 
+    /**Para buscar todos los becados */
+    async listSchoolars(req,res){
+        const students = await SchoolarsQueries.getSchoolars();
+        return res.json(students);
+    }
+
+
     /**para buscar schoolar por ID */
     async findSchoolar(req, res) {
         const id = req.id;

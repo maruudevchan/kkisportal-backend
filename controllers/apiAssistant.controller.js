@@ -19,7 +19,7 @@ class apiAssistantController {
     }
     
     async getSchoolars(req,res){
-        const highschool = await SchoolarsQueries.countSchoolars();
+        const highschool = await SchoolarsQueries.getSchoolars();
         return res.json(highschool);
     }
 

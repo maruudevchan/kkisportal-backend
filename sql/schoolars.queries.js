@@ -37,6 +37,42 @@ class schoolarsQueries {
 
     }
 
+    /**Para buscar todos los becados */
+    async getSchoolars() {
+        try {
+            const query = await schoolarsModel.findAll({
+                attributes: ['id', 'name', 'lastname', 'level', 'school'],
+                where: {
+                    level: [0,1],
+                    status: [1, 2]
+                }
+            });
+
+            //reemplazamos el id de la escuela por su nombre
+            const results = await Promise.all(query.map(async (student) => {
+                const schoolId = student.dataValues.school;
+                const school = await schoolsModel.findByPk(schoolId);
+                const schoolName = school ? school.dataValues.school : 'Escuela Desconocida';
+
+                return {
+                    id: student.dataValues.id,
+                    name: student.dataValues.name,
+                    lastname: student.dataValues.lastname,
+                    level: student.dataValues.level,
+                    school: schoolName
+                };
+            }
+            ));
+
+            return results;
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+
+
     /**Para actualizar un estudiante */
     async updateSchoolar(id, schoolar) {
         try {
@@ -52,7 +88,7 @@ class schoolarsQueries {
         }
 
     }
-
+    /**Para contar becados de universidad y bachillerato */
     async countSchoolars(res) {
         const highschool = await schoolarsModel.count({
             where: {
@@ -71,8 +107,7 @@ class schoolarsQueries {
 
     }
 
-    //para traer la lista de alumnos con pendientes
-
+    /*para traer la lista de alumnos con pendientes*/
     async listPendings() {
         try {
             const res = await GralNotesQueries.findPendings();
@@ -85,12 +120,12 @@ class schoolarsQueries {
                     }
                 }
             });
-    
+
             const results = await Promise.all(query.map(async (student) => {
                 const schoolId = student.dataValues.school;
                 const school = await schoolsModel.findByPk(schoolId);
                 const schoolName = school ? school.dataValues.school : 'Escuela Desconocida';
-                
+
                 // Retorna el objeto con los datos del estudiante y el nombre de la escuela
                 return {
                     id: student.dataValues.id,
@@ -101,13 +136,13 @@ class schoolarsQueries {
                 };
             }
             ));
-            
+
             return results;
         } catch (error) {
             throw error;
         }
     }
-    
+
 
 
 

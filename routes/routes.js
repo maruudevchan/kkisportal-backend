@@ -10,7 +10,7 @@ import { UsersController } from '../controllers/users.controller.js';
 import { ApiAssistantController } from '../controllers/apiAssistant.controller.js';
 import { SponsorsController } from '../controllers/sponsors.controller.js';
 import { GralNotesController } from '../controllers/gralNotes.controller.js';
-
+ 
 //middleware
 // import { validateToken } from '../middlewares/accessToken.middleware.js';
 
@@ -35,6 +35,9 @@ export class Routes {
         //para schoolars
         app.route('/newSchoolar').post(bodyParser.json(), SchoolarsController.store);
         app.route('/pendings').get(GralNotesController.findPendings);
+        // app.route('/pendings/:id').get(GralNotesController.findPendingById);
+        app.route('/schoolars').get(SchoolarsController.listSchoolars);
+        
         
         //para advisors
         // app.route('/newAdvisor').post(bodyParser.json(), AdvisorsController.store);

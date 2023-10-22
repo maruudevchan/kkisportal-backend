@@ -82,9 +82,10 @@ schoolarsModel.init({
     school: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        foreignKey: true,
         references: {
             model: schoolsModel,
-            key: 'id'
+            key: 'id',
         }
     },
     location: {
