@@ -41,10 +41,10 @@ class schoolarsQueries {
     async getSchoolars() {
         try {
             const query = await schoolarsModel.findAll({
-                attributes: ['id', 'name', 'lastname', 'level', 'school'],
+                attributes: ['id','status', 'name', 'lastname', 'level', 'school'],
                 where: {
                     level: [0,1],
-                    status: [1, 2]
+                    status: [1, 2, 3, -1]
                 }
             });
 
@@ -56,6 +56,7 @@ class schoolarsQueries {
 
                 return {
                     id: student.dataValues.id,
+                    status: student.dataValues.status,
                     name: student.dataValues.name,
                     lastname: student.dataValues.lastname,
                     level: student.dataValues.level,
