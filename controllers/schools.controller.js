@@ -32,11 +32,23 @@ class schoolsController {
     }
 
     /**Para actualizar una escuela */
-    async updateSchool(id, school) {
+    async updateSchool(request, response) {
         const id = request.id;
         const school = request.body;
 
         const query = await SchoolsQueries.updateSchool(id, school);
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+        
+    }
+
+    //para traer las escuelas en orden alfabético con cierta estructura
+    async orderedListSchools(request, response) {
+        const query = await SchoolsQueries.orderedListSchools();
 
         if (query.ok) {
             response.status(200).json(query.data);

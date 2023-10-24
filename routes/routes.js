@@ -10,6 +10,8 @@ import { UsersController } from '../controllers/users.controller.js';
 import { ApiAssistantController } from '../controllers/apiAssistant.controller.js';
 import { SponsorsController } from '../controllers/sponsors.controller.js';
 import { GralNotesController } from '../controllers/gralNotes.controller.js';
+import { SchoolsQueries } from '../sql/schools.queries.js';
+import { SchoolsController } from '../controllers/schools.controller.js';
  
 //middleware
 // import { validateToken } from '../middlewares/accessToken.middleware.js';
@@ -38,7 +40,9 @@ export class Routes {
         // app.route('/pendings/:id').get(GralNotesController.findPendingById);
         app.route('/schoolars').get(SchoolarsController.listSchoolars);
         
-        
+        //para escuelas
+         app.route('/datalist').get(bodyParser.json(), SchoolsController.orderedListSchools);
+
         //para advisors
         // app.route('/newAdvisor').post(bodyParser.json(), AdvisorsController.store);
 

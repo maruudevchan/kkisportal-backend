@@ -35,7 +35,7 @@ class aschoolsQueries {
 
     }
 
-    /**Para actualizar un advisor */
+    /**Para actualizar una escuela */
     async updateSchool(id, school) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
@@ -51,7 +51,45 @@ class aschoolsQueries {
 
     }
 
+    /**Para traer las escuelas en orden alfabético con cierta estructura*/
+    async orderedListSchools() {
+        try {
+            // Traemos secundarias de manera ascendente
+            const jrhigh = await schoolsModel.findAll({
+                attributes: ['id', 'school'],
+                order: [['school', 'ASC']],
+                where: {
+                    type: 1
+                }
+            });
+    
+            // Traemos preparatorias de manera ascendente
+            const highschool = await schoolsModel.findAll({
+                attributes: ['id', 'school'],
+                order: [['school', 'ASC']],
+                where: {
+                    type: 2
+                }
+            });
+    
+            // Traemos universidades de manera ascendente
+            const college = await schoolsModel.findAll({
+                attributes: ['id', 'school'],
+                order: [['school', 'ASC']],
+                where: {
+                    type: 3
+                }
+            });
 
+            return { ok: true, data: { jrhigh, highschool, college } };
+
+        } catch (error) {
+            console.error('Error al traer las escuelas:', error);
+            // Puedes lanzar una excepción si lo deseas para manejar el error en otro lugar
+            throw new Error(`Error al traer las escuelas: ${error.message}`);
+        }
+    }
+    
 }
 
 export const SchoolsQueries = new aschoolsQueries();
