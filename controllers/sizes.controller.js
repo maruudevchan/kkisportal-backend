@@ -41,6 +41,18 @@ class sizesController {
             response.status(400).json({ error: query.error });
         }
     }
+
+    /**para listar tallas */
+    async listSizes(request, response) {
+        const query = await SizesQueries.listSizes();
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+    }
+
 }
 
-export const sizesController = new sizesController();
+export const SizesController = new sizesController();

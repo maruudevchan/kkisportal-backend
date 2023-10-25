@@ -1,6 +1,5 @@
 import { query } from "express"
 import {coloniasModel } from "../models/colonias.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class coloniasQueries {
@@ -52,6 +51,21 @@ class coloniasQueries {
 
     }
 
+    /**Para listar colonias */
+    async listColonias() {
+        try {
+            const query = await coloniasModel.findAll(
+                {
+                    attributes: ['id', 'colonia'],
+                    order: [['colonia', 'ASC']]
+                }
+            );
+            return { ok: true, data: query };
+        } catch (error) {
+            console.log('error: ', error);
+            return { ok: false, error: `Error al listar las colonias: ${error.message}` };
+        }
+    }
 
 }
 

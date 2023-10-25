@@ -2,7 +2,7 @@ import { HouseSituationsQueries } from "../sql/houseSituations.queries.js"
 import { request, response } from 'express';
 
 
-class HouseSituationsController {
+class houseSituationsController {
 
     /**Para meter situaciones */
 
@@ -44,7 +44,18 @@ class HouseSituationsController {
 
     }
 
+    /**Para listar houseSituations */
+    async listHouseSituations(req, res) {
+        const query = await HouseSituationsQueries.listHouseSituations();
+
+        if (query.ok) {
+            return res.status(200).json(query);
+        } else {
+            return res.status(400).json(query);
+        }
+    }
+
 
 }
 
-export const HouseSituationsController = new HouseSituationsController();
+export const HouseSituationsController = new houseSituationsController();

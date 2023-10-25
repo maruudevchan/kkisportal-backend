@@ -45,6 +45,16 @@ class sponsorsController {
 
     }
 
+    async listSponsors(request, response) {
+        const query = await SponsorsQueries.listSponsors();
+
+        if (query.ok) {
+            response.status(200).json(query.data);
+        } else {
+            response.status(400).json({ error: query.error });
+        }
+    }
+
 }
 
 export const SponsorsController = new sponsorsController();

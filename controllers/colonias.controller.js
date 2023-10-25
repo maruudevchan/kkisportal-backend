@@ -48,7 +48,17 @@ class coloniasController {
 
     }
 
+    /**Para listar colonias */
+    async listColonias(req, res) {
+        const query = await ColoniasQueries.listColonias();
+
+        if (query.ok) {
+            return res.status(200).json(query.data);
+        } else {
+            return res.status(400).json(query.error);
+        }
+    }
 
 }
 
-export const coloniasController = new coloniasController();
+export const ColoniasController = new coloniasController();

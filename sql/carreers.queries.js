@@ -1,6 +1,5 @@
 import { query } from "express"
 import { carreersModel } from "../models/carreers.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class carreersQueries {
@@ -50,6 +49,21 @@ class carreersQueries {
             return { ok: true, message: 'Carrera actualizada correctamente' };
         }
 
+    }
+
+    /**Para listar carreers */
+    async listCarreers() {
+        try {
+            const query = await carreersModel.findAll({
+                attributes: ['id', 'career'],
+                order: [['career', 'ASC']]    
+            });
+            return { ok: true, data: query };
+
+        } catch (error) {
+            console.log('error: ', error);
+            return error(`Error al listar las carreras: ${error.message}`);
+        }
     }
 
 

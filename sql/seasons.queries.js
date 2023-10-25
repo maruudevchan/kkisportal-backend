@@ -23,6 +23,27 @@ class seasonsQueries {
     }
 
 
+    /**para enlistar temporadas */
+    async listSeasons() {
+        try {
+            const query = await seasonsModel.findAll(
+                {
+                    attributes: ['id', 'season'],
+                    order: [
+                        ['id', 'ASC']
+                    ]
+                }
+            );
+        } catch (error) {
+            console.log('error: ', error);
+            return error(`Error al enlistar las temporadas: ${error.message}`);
+        } finally {
+            return { ok: true, data: query.data };
+        }
+
+    }
+
+
 }
 
 export const SeasonsQueries = new seasonsQueries();

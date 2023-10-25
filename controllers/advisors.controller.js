@@ -45,6 +45,18 @@ class advisorsController {
 
     }
 
+    async listAdvisors(req, res) {
+        console.log('list advisors');
+        const query = await AdvisorsQueries.listAdvisors();
+
+        if (query.ok) {
+            return res.status(200).json({ ok: true, data: query.data });
+        } else {
+            return res.status(500).json({ ok: false, error: query.error });
+        }
+
+    }
+
 }
 
 export const AdvisorsController = new advisorsController();

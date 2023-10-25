@@ -44,6 +44,17 @@ class carreersController {
 
     }
 
+    /**Para listar carreers */
+    async listCarreers(req, res) {
+        const query = await CarreersQueries.listCarreers();
+
+        if (query.ok) {
+            return res.status(200).json({ ok: true, data: query.data });
+        }else {
+            return res.status(500).json({ ok: false, error: query.error });
+        }
+    }
+
 }
 
 export const CarreersController = new carreersController();

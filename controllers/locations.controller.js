@@ -46,6 +46,16 @@ class locationsController {
 
     }
 
+    /**Para listar ciudades */
+    async listLocations(request, response) {
+        const query = await LocationsQueries.listLocations();
+
+        if (query.ok) {
+            return response.status(200).json(query);
+        } else {
+            return response.status(400).json(query);
+        }
+    }
 
 }
 

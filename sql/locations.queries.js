@@ -1,6 +1,5 @@
 import { query } from "express"
 import { locationsModel } from "../models/locations.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class locationsQueries{
@@ -50,6 +49,20 @@ class locationsQueries{
             return { ok: true, message: 'ciudad actualizada correctamente' };
         }
 
+    }
+
+    /**Para listar ciudades */
+    async listLocations() {
+        try {
+            const query = await locationsModel.findAll({
+                attributes: ['id', 'city'],
+                order: [['city', 'ASC']]
+            });
+            return { ok: true, data: query };
+        } catch (error) {
+            console.log('error: ', error);
+            return { ok: false, error: `Error al listar las ciudades: ${error.message}` };
+        }
     }
 
 

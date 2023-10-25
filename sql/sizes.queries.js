@@ -1,6 +1,5 @@
 import { query } from "express"
 import { sizesModel } from "../models/sizes.js"
-import { http } from "http"
 import { Op as Op } from 'sequelize'
 
 class sizesQueries {
@@ -52,6 +51,23 @@ class sizesQueries {
 
     }
 
+
+    /**para enlistar tallas */
+    async listSizes() {
+        try {
+            const query = await sizesModel.findAll(
+                {
+                    attributes: ['id', 'tshirtsize'],
+                    order: [['id', 'ASC']]
+                }
+            );
+            return { ok: true, data: query };
+
+        } catch (error) {
+            console.log('error: ', error);
+            return { ok: false, error: `Error al listar las tallas: ${error.message}` };
+        }
+    }
 }
 
 export const SizesQueries = new sizesQueries();

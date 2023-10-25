@@ -57,6 +57,23 @@ class sponsorsQueries {
 
     }
 
+    /**para enlistar sponsors */
+    async listSponsors() {
+        try {
+            const query = await sponsorsModel.findAll(
+                {
+                    attributes: ['id', 'spName'],
+                    order: [['spName', 'ASC']]
+                }
+            );
+            return { ok: true, data: query };
+
+        } catch (error) {
+            console.log('error: ', error);
+            return error(`Error al enlistar los patrocinadores: ${error.message}`);
+        }
+    }
+
 }
 
 export const SponsorsQueries = new sponsorsQueries();

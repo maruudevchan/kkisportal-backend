@@ -59,6 +59,22 @@ class houseSituationsQueries {
 
     }
 
+    /**Para listar houseSituations */
+    async listHouseSituations() {
+        try {
+            const query = await houseSituationsModel.findAll(
+                {
+                    attributes: ['id', 'situation'],
+                    order: [['situation', 'ASC']]
+                }
+            );
+            return query
+        } catch (error) {
+            console.log('error: ', error);
+            return error(`Error al listar las situaciones: ${error.message}`);
+        }
+    }
+
 
 }
 

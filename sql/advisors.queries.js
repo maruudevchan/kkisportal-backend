@@ -56,6 +56,19 @@ class advisorsQueries {
         return advisors
     }
 
+    async listAdvisors(res){
+        try{
+            const advisors = await advisorsModel.findAll({
+                attributes: ['id', 'advisorName'],
+                order: [['advisorName', 'ASC']]
+            })
+            console.log('advisors: ', advisors);
+            return ({ok: true, data: advisors})
+        }catch(error){
+            console.log('error: ', error);
+            return error(`Error al crear el asesor: ${error.message}`);
+        }
+ }
 
 }
 
