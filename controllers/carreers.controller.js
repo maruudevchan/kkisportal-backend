@@ -49,7 +49,7 @@ class carreersController {
         const query = await CarreersQueries.listCarreers();
 
         if (query.ok) {
-            return res.status(200).json({ ok: true, data: query.data });
+            return res.status(200).json(query.data);
         }else {
             return res.status(500).json({ ok: false, error: query.error });
         }

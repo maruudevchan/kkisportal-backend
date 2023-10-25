@@ -49,8 +49,7 @@ class schoolsController {
     //para traer las escuelas en orden alfabético con cierta estructura
     async orderedListSchools(request, response) {
         const query = await SchoolsQueries.orderedListSchools();
-
-        if (query.ok) {
+        if (query) {
             response.status(200).json(query.data);
         } else {
             response.status(400).json({ error: query.error });

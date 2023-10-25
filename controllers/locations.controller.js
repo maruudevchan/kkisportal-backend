@@ -51,7 +51,7 @@ class locationsController {
         const query = await LocationsQueries.listLocations();
 
         if (query.ok) {
-            return response.status(200).json(query);
+            return response.status(200).json(query.data);
         } else {
             return response.status(400).json(query);
         }

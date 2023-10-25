@@ -49,9 +49,9 @@ class houseSituationsController {
         const query = await HouseSituationsQueries.listHouseSituations();
 
         if (query.ok) {
-            return res.status(200).json(query);
+            return res.status(200).json(query.data);
         } else {
-            return res.status(400).json(query);
+            throw new Error(query.error);
         }
     }
 

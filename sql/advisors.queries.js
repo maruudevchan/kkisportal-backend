@@ -62,8 +62,7 @@ class advisorsQueries {
                 attributes: ['id', 'advisorName'],
                 order: [['advisorName', 'ASC']]
             })
-            console.log('advisors: ', advisors);
-            return ({ok: true, data: advisors})
+            return advisors
         }catch(error){
             console.log('error: ', error);
             return error(`Error al crear el asesor: ${error.message}`);

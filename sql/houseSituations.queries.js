@@ -43,18 +43,16 @@ class houseSituationsQueries {
     async updatehouseSituations(id, houseSituation) {
         try {
             // Utiliza el método `update` de Sequelize para actualizar la fila en función del ID
-            const [updatedRows] = await houseSituationsModel.update(houseSituation, {
+            const row = await houseSituationsModel.update(houseSituation, {
                 where: { id: id },
             });
+            return row
 
         } catch (error) {
 
             console.log('error: ', error);
             return { ok: false, error: `Error al actualizar la situación: ${error.message}` };
 
-        } finally {
-            
-            return { ok: true, message: 'Asesor actualizado correctamente' };
         }
 
     }
@@ -68,7 +66,7 @@ class houseSituationsQueries {
                     order: [['situation', 'ASC']]
                 }
             );
-            return query
+            return { ok: true, data: query };
         } catch (error) {
             console.log('error: ', error);
             return error(`Error al listar las situaciones: ${error.message}`);

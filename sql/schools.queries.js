@@ -54,38 +54,15 @@ class aschoolsQueries {
     /**Para traer las escuelas en orden alfabético con cierta estructura*/
     async orderedListSchools() {
         try {
-            // Traemos secundarias de manera ascendente
-            const jrhigh = await schoolsModel.findAll({
-                attributes: ['id', 'school'],
-                order: [['school', 'ASC']],
-                where: {
-                    type: 1
-                }
-            });
-    
-            // Traemos preparatorias de manera ascendente
-            const highschool = await schoolsModel.findAll({
-                attributes: ['id', 'school'],
-                order: [['school', 'ASC']],
-                where: {
-                    type: 2
-                }
-            });
-    
-            // Traemos universidades de manera ascendente
-            const college = await schoolsModel.findAll({
-                attributes: ['id', 'school'],
-                order: [['school', 'ASC']],
-                where: {
-                    type: 3
-                }
-            });
-
-            return { ok: true, data: { jrhigh, highschool, college } };
+            const query = await schoolsModel.findAll({
+                attributes: ['id','type','school'],
+                order: [['type', 'ASC'], ['school', 'ASC']]
+              });
+              
+              return { ok: true, data: query };
 
         } catch (error) {
             console.error('Error al traer las escuelas:', error);
-            // Puedes lanzar una excepción si lo deseas para manejar el error en otro lugar
             throw new Error(`Error al traer las escuelas: ${error.message}`);
         }
     }
