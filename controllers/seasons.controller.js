@@ -19,8 +19,8 @@ class seasonsController {
     /**seasons enlistados */
     async listSeasons(request, response) {
         const query = await SeasonsQueries.listSeasons();
-
-        if (query.ok) {
+        if (query) {
+            console.log('query: ', query.data);
             response.status(200).json(query.data);
         } else {
             response.status(400).json({ error: query.error });
